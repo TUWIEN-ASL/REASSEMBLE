@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "REASSEMBLE"
+authors = [
+    {name = "Daniel Sliwowski"}
+]
+description = "A Multimodal Dataset for Contact-rich Robotic Assembly and Disassembly"
+version = "0.0.1"
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["robotics"]
+dependencies = [
+    "h5py",
+    "imageio",
+    "imageio-ffmpeg",
+    "matplotlib",
+    "opencv-python",
+    "opencv-contrib-python",
+    "Pillow",
+    "tqdm",
+    "zerorpc",
+    "rerun-sdk",
+    "pydub",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black[jupyter]",
+    "ipython",
+    "pre-commit",
+    "ruff",
+]
+postprocessing = [
+    "scikit-image",
+]
+
+[project.urls]
+homepage = "https://dsliwowski1.github.io/REASSEMBLE_page"
+repository = "https://dsliwowski1.github.io/REASSEMBLE_page"
+documentation = "https://dsliwowski1.github.io/REASSEMBLE_page"
+
+[tool.black]
+line-length = 121
+target-version = ["py37", "py38", "py39", "py310"]
+preview = true
+
+[tool.ruff]
+line-length = 121
+target-version = "py38"
+select = ["A", "B", "C90", "E", "F", "I", "RUF", "W"]
+ignore = ["F405", "B006", "C901", "F403", "E722"]
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+
+[tool.isort]
+profile = "black"
+line_length = 121
+skip = ["__init__.py"]
+filter_files = true
+py_version = "all"
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["cache"]

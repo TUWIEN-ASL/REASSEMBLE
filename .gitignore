@@ -1,0 +1,9 @@
+data/*
+**/*.pyc
+*.egg-info
+tmp
+*.mp4
+*.wav
+
+# exceptions
+!**/.gitkeep
