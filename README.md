@@ -54,7 +54,17 @@ pip install -e .
 ```
 
 ### Usage
+Scripts are parametized with argparse, so in doubt you and always add the ```-h``` flag to get a description of the parameters.
 
+Example for running the dataset conversion:
+```
+python scripts/conversions/h5_to_rlds.py --input_dir data/REASSEMBLE --output_dir data/ds_rlds --max_files 2
+```
+
+Example for running visualization:
+```
+python scripts/visualization/vizualize_data.py  data/REASSEMBLE_corrected/2025-01-13-09-43-29.h5 --cleanup
+```
 
 ## 📝 License
 
@@ -62,7 +72,23 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Credit to anyone whose code was used
+- We would like to thank the people responsible for the [DROID dataset](https://droid-dataset.github.io/) and for sharing their codebase. The code structure within this
+repository is inspired by their structure.
+
+## 📖 Bibtex
+
+```
+@INPROCEEDINGS{Sliwowski-RSS-25, 
+    AUTHOR    = {Daniel Sliwowski AND Shail Jadav AND Sergej Stanovcic AND Jedrzej Orbik AND Johannes Heidersberger AND Dongheui Lee}, 
+    TITLE     = {{Demonstrating REASSEMBLE: A Multimodal Dataset for Contact-rich Robotic Assembly and Disassembly}}, 
+    BOOKTITLE = {Proceedings of Robotics: Science and Systems}, 
+    YEAR      = {2025}, 
+    ADDRESS   = {Los Angeles, USA}, 
+    MONTH     = {June}, 
+    DOI       = {} 
+} 
+  
+```
 
 ## 📞 Contact
 
