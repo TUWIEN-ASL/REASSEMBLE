@@ -168,7 +168,7 @@ def merge_dict_keys(data_dict):
     return new_dict
 
 
-def load_h5_file(file_path):
+def load_h5_file(file_path, decode=True):
     """
     Load and process an HDF5 file containing robot data.
     
@@ -181,7 +181,7 @@ def load_h5_file(file_path):
     Returns:
         Dictionary containing the processed data
     """
-    def recursively_convert_to_dict(obj):
+    def recursively_convert_to_dict(obj, decode=decode):
         """
         Recursively convert HDF5 groups and datasets to Python dictionaries and arrays.
         
@@ -195,12 +195,10 @@ def load_h5_file(file_path):
             return {key: recursively_convert_to_dict(obj[key]) for key in obj.keys()}
         elif isinstance(obj, h5py.Dataset):
             data = obj[()]
-            # Note: Commented out code for handling MP4 blobs
-            # if isinstance(data, np.void):  # Check if it's a numpy.void
-            #     # Call the mp4_blob_to_numpy function
-            #     # return jutils.media.mp4_blob_to_numpy(data)
-            # else:
-            return data  # Convert dataset to numpy array or other types
+            if decode and isinstance(data, np.void):
+                return mp4_blob_to_numpy(data)
+            else:
+                return data  # Convert dataset to numpy array or other types
         else:
             raise TypeError("Unknown object type")
 

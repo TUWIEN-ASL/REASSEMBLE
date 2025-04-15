@@ -1,0 +1,75 @@
+# REASSEMBLE: A Multimodal Dataset for Contact-rich Robotic Assembly and Disassembly
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/TUWIEN-ASL/REASSEMBLE.svg)](https://github.com/TUWIEN-ASL/REASSEMBLE/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/TUWIEN-ASL/REASSEMBLE.svg)](https://github.com/TUWIEN-ASL/REASSEMBLE/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/TUWIEN-ASL/REASSEMBLE.svg)](https://github.com/TUWIEN-ASL/REASSEMBLE/pulls)
+[![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Paper](https://img.shields.io/badge/arXiv-2502.05086-b31b1b.svg)](https://arxiv.org/abs/2502.05086)
+[![Website](https://img.shields.io/badge/Website-Project_Page-green.svg)](https://dsliwowski1.github.io/REASSEMBLE_page/)
+
+## 📋 Abstract
+
+Robotic manipulation remains a core challenge in robotics, particularly for contact-rich tasks such as industrial assembly and disassembly. Existing datasets have significantly advanced learning in manipulation but are primarily focused on simpler tasks like object rearrangement, falling short of capturing the complexity and physical dynamics involved in assembly and disassembly. To bridge this gap, we present REASSEMBLE (Robotic assEmbly disASSEMBLy datasEt), a new dataset designed specifically for contact-rich manipulation tasks. Built around the NIST Assembly Task Board 1 benchmark, REASSEMBLE includes four actions (pick, insert, remove, and place) involving 17 objects. The dataset contains 4,551 demonstrations, of which 4,035 were successful, spanning a total of 781 minutes. Our dataset features multi-modal sensor data including event cameras, force-torque sensors, microphones, and multi-view RGB cameras. This diverse dataset supports research in areas such as learning contact-rich manipulation, task condition identification, action segmentation, and more. We believe REASSEMBLE will be a valuable resource for advancing robotic manipulation in complex, real-world scenarios.
+
+### ✨ Key Features
+
+- Multimodality: REASSEMBLE contains data from robot proprioception, RGB cameras, Force&Torque sensors, microphones, and event cameras
+- Multitask labels: REASSEMBLE contains labeling which enables research in Temporal Action Segmentation, Motion Policy Learning, Anomaly detection, and Task Inversion.
+- Long horizon: Demontrations in the REASSEMBLE dataset cover long horizon tasks and actions which usually span multiple steps.
+- Hierarchical labels: REASSEMBLE contains actions segmentation labels at two hierarchical levels.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+List all the prerequisites required to use your project:
+
+```
+Python 3.9+
+conda (recommended)
+```
+
+### Installation
+
+Step-by-step guide on how to install your project:
+
+```bash
+# Clone the repository
+git clone https://github.com/TUWIEN-ASL/REASSEMBLE.git
+
+# Navigate to the project directory
+cd REASSEMBLE
+
+# Create and activate a conda environment (optional but recommended)
+conda create -n REASSEMBLE python=3.10
+conda activate REASSEMBLE
+
+# Install dependencies
+pip install -r requirements.txt
+conda install conda-forge::ffmpeg
+
+# Install REASSEMBLE package
+pip install -e .
+```
+
+### Usage
+
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Credit to anyone whose code was used
+
+## 📞 Contact
+
+Daniel Sliwowski - [daniel.sliwowski@tuwien.ac.at](daniel.sliwowski@tuwien.ac.at) - [Personal Webpage](https://dsliwowski1.github.io)
+
+Project Link: [https://github.com/TUWIEN-ASL/REASSEMBLE](https://github.com/TUWIEN-ASL/REASSEMBLE)
+
+---
+
+⭐️ From [TUWIEN-ASL](https://github.com/TUWIEN-ASL)
