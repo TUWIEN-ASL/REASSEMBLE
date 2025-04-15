@@ -26,7 +26,7 @@ Robotic manipulation remains a core challenge in robotics, particularly for cont
 List all the prerequisites required to use your project:
 
 ```
-Python 3.9+
+Python 3.10+
 conda (recommended)
 ```
 
