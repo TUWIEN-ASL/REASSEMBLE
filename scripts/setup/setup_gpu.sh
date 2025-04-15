@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## WORK IN PROGRESS
+
 # ROOT_DIR="$(git rev-parse --show-toplevel)"
 ROOT_DIR="/home/dsliwowski/Projects/REASSEMBLE/REASSEMBLE"
 DOCKER_COMPOSE_DIR="$ROOT_DIR/.docker/gpu_pc"
