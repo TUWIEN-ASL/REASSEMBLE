@@ -53,6 +53,9 @@ conda install conda-forge::ffmpeg
 pip install -e .
 ```
 
+### Downloading dataset
+The dataset can be downloaded from the following link [google drive](https://drive.google.com/drive/u/1/folders/1HPsG63iI2tpovJoh_o2zhmyx9muNcnVx)
+
 ### Usage
 Scripts are parametized with argparse, so in doubt you and always add the ```-h``` flag to get a description of the parameters.
 
