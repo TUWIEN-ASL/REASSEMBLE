@@ -14,14 +14,18 @@ from REASSEMBLE.io import load_segment_info
 
 def calc_stats(records, keep_lists=False):
     """
-    Calculate statistics from action records loaded from H5 files.
+    Calculate statistics from action records loaded from H5 files. The script creates two separate tables. The first
+    one analyzes low-level actions regarding success rate and duration. The second table has a histogram-like structure,
+    describing the number of steps (low-level) necessary to perform a segment (high-level). Both tables are sorted
+    alphabetically and have a total row in the bottom.
     
     Parameters:
     -----------
     records : dict
-        Dictionary of records loaded from H5 files (filename -> record data)
+        Dictionary of records loaded from H5 files (filename -> record data). Can be easily created by our other script
+        REASSEMBLE.io.load_segment_info(h5_dir).
     keep_lists : bool, optional
-        Whether to retain the original lists in the output dataframes (default: False)
+        Whether to retain the original lists of action durations in the output dataframes. (default: False)
         
     Returns:
     --------

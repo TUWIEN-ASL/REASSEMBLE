@@ -1,0 +1,15 @@
+<launch>
+	<!-- Arguments -->
+    <arg name="device" default="omega6"/>
+	<arg name="force" default="true"/>
+	<arg name="centering" default="true"/>
+
+	<!-- Control parameter for master device -->
+	<rosparam file="$(find haptic_ros)/config/HapticDeviceConfig.yaml" command="load"/>
+
+	<node name="HapticDevice_node" pkg="haptic_ros" type="HapticDevice" output="screen" required="true">
+		<param name="device" value="$(arg device)"/>
+		<param name="force" value="$(arg force)"/>
+		<param name="centering" value="$(arg centering)"/>
+	</node>
+</launch>

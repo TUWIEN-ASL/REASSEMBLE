@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>haptic_ros</name>
+  <version>0.0.0</version>
+  <description>The haptic_ros package</description>
+
+  <maintainer email="jacknlliu@gmail.com">Jack Liu</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>eigen</build_depend>
+  <!-- <build_depend>tf2</build_depend> -->
+  <depend>eigen_conversions</depend>
+  <!-- <depend>roscpp</depend> -->
+  <exec_depend>roscpp</exec_depend>
+  <!-- <exec_depend>tf2</exec_depend> -->
+
+</package>

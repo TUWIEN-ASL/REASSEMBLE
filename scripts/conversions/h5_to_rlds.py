@@ -2,9 +2,9 @@
 """
 RLDS Data Conversion Tool
 
-This script is an example hot o convert the h5 raw data into RLDS format. The target RLDS format used
-in this script is compatible with the one of DORID, meaning their policy learning implementation
-should work with the resulting dataset.
+This script is an example of how to convert the h5 raw data into RLDS format. The target RLDS format used
+in this script is compatible with the one of DROID, meaning their policy learning implementation
+works with the resulting dataset.
 
 This script converts HDF5 robot demonstration data into the RLDS (Reinforcement Learning Datasets) format,
 specifically optimized for robot manipulation tasks. The tool supports both single-process and
