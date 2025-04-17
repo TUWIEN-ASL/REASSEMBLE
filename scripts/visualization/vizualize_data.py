@@ -410,7 +410,7 @@ def main():
 
     # Load data from H5 file
     global data  # Make data accessible to blueprint setup function
-    data = load_h5_file(args.file)
+    data = load_h5_file(args.file, decode=False)
     audio_downsize_ratio = args.ra
     internal_downsize_ratio = args.ri
 
