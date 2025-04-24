@@ -111,9 +111,3 @@ repository is inspired by their structure.
 ## 📞 Contact
 
 Daniel Sliwowski - [daniel.sliwowski@tuwien.ac.at](daniel.sliwowski@tuwien.ac.at) - [Personal Webpage](https://dsliwowski1.github.io)
-
-Project Link: [https://github.com/TUWIEN-ASL/REASSEMBLE](https://github.com/TUWIEN-ASL/REASSEMBLE)
-
----
-
-⭐️ From [TUWIEN-ASL](https://github.com/TUWIEN-ASL)
