@@ -69,6 +69,21 @@ Example for running visualization:
 python scripts/visualization/vizualize_data.py  data/REASSEMBLE_corrected/2025-01-13-09-43-29.h5 --cleanup
 ```
 
+## File comments
+
+| Recording              | Issue                             |
+|------------------------|-----------------------------------|
+| 2025-01-10-15-28-50.h5 | hand cam missing at beginning     |
+| 2025-01-10-16-17-40.h5 | missing hand cam                  |
+| 2025-01-10-17-10-38.h5 | hand cam missing at beginning     |
+| 2025-01-10-17-54-09.h5 | no empty action at beginning      |
+| 2025-01-11-14-22-09.h5 | no empty action at beginning      |
+| 2025-01-11-14-45-48.h5 | F/T not valid for last action     |
+| 2025-01-11-15-27-19.h5 | F/T not valid for last action     |
+| 2025-01-11-15-35-08.h5 | F/T not valid for last action     |
+| 2025-01-13-11-16-17.h5 | gripper broke for last action     |
+| 2025-01-13-11-18-57.h5 | pose not avaiable for last action |
+
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
