@@ -1,0 +1,18 @@
+services:
+  ros:
+    build: .
+    container_name: reassemble
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    tty: True
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    network_mode: host
+    privileged: true
+    devices:
+      - /dev/hidraw0
+      - /dev/hidraw1
+      - /dev/hidraw2
+      - /dev/hidraw3
+    command: /bin/bash

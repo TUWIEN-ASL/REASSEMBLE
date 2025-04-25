@@ -16,14 +16,14 @@ Robotic manipulation remains a core challenge in robotics, particularly for cont
 
 - Multimodality: REASSEMBLE contains data from robot proprioception, RGB cameras, Force&Torque sensors, microphones, and event cameras
 - Multitask labels: REASSEMBLE contains labeling which enables research in Temporal Action Segmentation, Motion Policy Learning, Anomaly detection, and Task Inversion.
-- Long horizon: Demontrations in the REASSEMBLE dataset cover long horizon tasks and actions which usually span multiple steps.
+- Long horizon: Demonstrations in the REASSEMBLE dataset cover long horizon tasks and actions which usually span multiple steps.
 - Hierarchical labels: REASSEMBLE contains actions segmentation labels at two hierarchical levels.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-List all the prerequisites required to use your project:
+List of all the prerequisites required to use the project:
 
 ```
 Python 3.10+
@@ -32,7 +32,7 @@ conda (recommended)
 
 ### Installation
 
-Step-by-step guide on how to install your project:
+Step-by-step guide on how to install the project:
 
 ```bash
 # Clone the repository
@@ -53,11 +53,13 @@ conda install conda-forge::ffmpeg
 pip install -e .
 ```
 
+Before building an image from the Dockerfile, the NatNet SDK must be downloaded in advance. Run ```install_sdk.sh``` in ```catkin_reas/src/natnet_ros_cpp``` to download and extract the SDK.
+
 ### Downloading dataset
 The dataset can be downloaded from the following link [google drive](https://drive.google.com/drive/u/1/folders/1HPsG63iI2tpovJoh_o2zhmyx9muNcnVx)
 
 ### Usage
-Scripts are parametized with argparse, so in doubt you and always add the ```-h``` flag to get a description of the parameters.
+Scripts are parametrized with argparse, so in doubt you and always add the ```-h``` flag to get a description of the parameters.
 
 Example for running the dataset conversion:
 ```

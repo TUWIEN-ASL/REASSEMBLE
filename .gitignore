@@ -7,3 +7,6 @@ tmp
 
 # exceptions
 !**/.gitkeep
+
+# NatNet SDK
+catkin_reas/src/natnet_ros_cpp/deps/NatNetSDK/
