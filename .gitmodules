@@ -1,0 +1,18 @@
+[submodule "catkin_reas/src/franka_ros"]
+	path = catkin_reas/src/franka_ros
+	url = https://github.com/frankaemika/franka_ros
+[submodule "catkin_reas/src/force_torque_tools"]
+	path = catkin_reas/src/force_torque_tools
+	url = https://github.com/kth-ros-pkg/force_torque_tools.git
+[submodule "catkin_reas/src/franka_interactive_controllers"]
+	path = catkin_reas/src/franka_interactive_controllers
+	url = https://github.com/nbfigueroa/franka_interactive_controllers.git
+[submodule "catkin_reas/src/haptic_ros"]
+	path = catkin_reas/src/haptic_ros
+	url = https://github.com/jacknlliu/haptic_ros_driver.git
+[submodule "catkin_reas/src/natnet_ros_cpp"]
+	path = catkin_reas/src/natnet_ros_cpp
+	url = https://github.com/L2S-lab/natnet_ros_cpp.git
+[submodule "catkin_reas/src/panda_moveit_config"]
+	path = catkin_reas/src/panda_moveit_config
+	url = https://github.com/moveit/panda_moveit_config.git
