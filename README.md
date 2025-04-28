@@ -6,7 +6,7 @@
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/TUWIEN-ASL/REASSEMBLE.svg)](https://github.com/TUWIEN-ASL/REASSEMBLE/pulls)
 [![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Paper](https://img.shields.io/badge/arXiv-2502.05086-b31b1b.svg)](https://arxiv.org/abs/2502.05086)
-[![Website](https://img.shields.io/badge/Website-Project_Page-green.svg)](https://dsliwowski1.github.io/REASSEMBLE_page/)
+[![Website](https://img.shields.io/badge/Website-Project_Page-green.svg)](https://tuwien-asl.github.io/REASSEMBLE_page/)
 
 ## 📋 Abstract
 
@@ -112,4 +112,4 @@ repository is inspired by their structure.
 
 ## 📞 Contact
 
-Daniel Sliwowski - [daniel.sliwowski@tuwien.ac.at](daniel.sliwowski@tuwien.ac.at) - [Personal Webpage](https://dsliwowski1.github.io)
+Daniel Sliwowski - [daniel.sliwowski@tuwien.ac.at](daniel.sliwowski@tuwien.ac.at)
