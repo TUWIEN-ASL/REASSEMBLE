@@ -71,6 +71,90 @@ Example for running visualization:
 python scripts/visualization/vizualize_data.py  data/REASSEMBLE_corrected/2025-01-13-09-43-29.h5 --cleanup
 ```
 
+## 📑 Dataset Structure
+
+The dataset consists of several HDF5 (.h5) and JSON (.json) files, organized into two directories. The poses directory contains the JSON files, which store the poses of the cameras and the board in the world coordinate frame. The data directory contains the HDF5 files, which store the sensory readings and annotations collected as part of the REASSEMBLE dataset. Each JSON file can be matched with its corresponding HDF5 file based on their filenames, which include the timestamp when the data was recorded. For example, 2025-01-09-13-59-54_poses.json corresponds to 2025-01-09-13-59-54.h5.
+
+The structure of the JSON files is as follows:
+
+```
+{"Hama1": [
+        [x ,y, z],
+        [qx, qy, qz, qw]
+ ], 
+ "Hama2": [
+        [x ,y, z],
+        [qx, qy, qz, qw]
+ ], 
+ "DAVIS346": [
+        [x ,y, z],
+        [qx, qy, qz, qw]
+ ], 
+ "NIST_Board1": [
+        [x ,y, z],
+        [qx, qy, qz, qw]
+ ]
+}
+```
+[x, y, z] represent the position of the object, and [qx, qy, qz, qw] represent its orientation as a quaternion.
+
+The HDF5 (.h5) format organizes data into two main types of structures: datasets, which hold the actual data, and groups, which act like folders that can contain datasets or other groups. In the diagram below, groups are shown as folder icons, and datasets as file icons. The main group of the file directly contains the video, audio, and event data. To save memory, video and audio are stored as encoded byte strings, while event data is stored as arrays. The robot’s proprioceptive information is kept in the robot_state group as arrays. Because different sensors record data at different rates, the arrays vary in length (signified by the N_xxx variable in the data shapes). To align the sensory data, each sensor’s timestamps are stored separately in the timestamps group. Information about action segments is stored in the segments_info group. Each segment is saved as a subgroup, named according to its order in the demonstration, and includes a start timestamp, end timestamp, a success indicator, and a natural language description of the action. Within each segment, low-level skills are organized under a low_level subgroup, following the same structure as the high-level annotations.
+
+```
+📁 <date_time>.h5
+├──📄 hama1 - mp4 encoded video
+├──📄 hama2_audio - mp3 encoded audio
+├──📄 hama2 - mp4 encoded video
+├──📄 hama2_audio - mp3 encoded audio
+├──📄 hand - mp4 encoded video
+├──📄 hand_audio - mp3 encoded audio
+├──📄 capture_node - mp4 encoded video (Event camera)
+├──📄 events - N_events x 3 (x, y, polarity)
+├──📁 robot_state
+│   ├──📄 compensated_base_force - N_bf x 3 (x, y, z)
+│   ├──📄 compenseted_base_torque - N_bt x 3 (x, y, z)
+│   ├──📄 gripper_positions - N_grip x 2 (left, right)
+│   ├──📄 joint_efforts - N_je x 7 (one for each joint)
+│   ├──📄 joint_positions - N_jp x 7 (one for each joint)
+│   ├──📄 joint_velocities - N_jv x 7 (one for each joint)
+│   ├──📄 measured_force - N_mf x 3 (x, y, z)
+│   ├──📄 measured_torque - N_mt x 7 (x, y, z)
+│   ├──📄 pose - N_poses x 7 (x, y, z, qw, qx, qy, qz)
+│   └──📄 velocity - N_vels x 7 (x, y, z, ω, γ, θ)
+├──📁 timestamps
+│   ├──📄 hama1 - N_hama1 x 1
+│   ├──📄 hama2 - N_hama1 x 1
+│   ├──📄 hand - N_hand x 1
+│   ├──📄 capture_node - N_capture x 1
+│   ├──📄 events - N_events x 1
+│   ├──📄 compensated_base_force - N_bf x 1
+│   ├──📄 compenseted_base_torque - N_bt x 1
+│   ├──📄 gripper_positions - N_grip x 1
+│   ├──📄 joint_efforts - N_je x 1
+│   ├──📄 joint_positions - N_jp x 1
+│   ├──📄 joint_velocities - N_jv x 1
+│   ├──📄 measured_force - N_mf x 1
+│   ├──📄 measured_torque - N_mt x 1
+│   ├──📄 pose - N_poses x 1
+│   └──📄 velocity - N_vels x 1
+└──📁 segments_info
+    ├──📁 0
+    │   ├──📄 start - scalar
+    │   ├──📄 end - scalar
+    │   ├──📄 success - Boolean
+    │   ├──📄 text - scalar
+    │   └──📁 Low_level
+    │       ├──📁 0
+    │       │   ├──📄 start - scalar
+    │       │   ├──📄 end - scalar
+    │       │   ├──📄 success - Boolean
+    │       │   └──📄 text - scalar
+    │       └──📁 1
+    │           ⋮
+    └──📁 1
+        ⋮
+```
+
 ## ⚠️ File comments
 
 | Recording              | Issue                             |
