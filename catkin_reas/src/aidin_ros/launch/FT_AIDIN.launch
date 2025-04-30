@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Arguments -->
+  <arg name="sample_rate" default="1000" />
+  <arg name="cutoff_frequency" default="35" />
+  <arg name="arm_id" default="fr3" />
+  <arg name="comm_type" default="can" />
+  <arg name="ec_use_imu" default="false" />
+  <!-- <arg name="ec_interface" default="enp9s0" /> -->
+  <arg name="ec_interface" default="enp3s0" />
+
+  <!-- CAN sensor -->
+  <group if="$(eval arg('comm_type') == 'can')">
+    <node name="aidin_can_ros_node" pkg="aidin_ros" type="aidin_can_ros_node" output="screen">
+      <param name="sample_rate" value="$(arg sample_rate)" />
+      <param name="cutoff_frequency" value="$(arg cutoff_frequency)" />
+      <param name="arm_id" value="$(arg arm_id)" />
+    </node>
+  </group>
+  
+  <!-- EtherCAT sensor -->
+  <group if="$(eval arg('comm_type') == 'ec')">
+    <node name="aidin_ec_ros_node" pkg="aidin_ros" type="aidin_ec_ros_node" output="screen" launch-prefix="ethercat_grant">
+    <!-- <node name="aidin_ec_ros_node" pkg="aidin_ros" type="aidin_ec_ros_node" output="screen" launch-prefix="echo LD_LIBRARY_PATH=$LD_LIBRARY_PATH &amp;&amp; ethercat_grant"> -->
+      <param name="sample_rate" value="$(arg sample_rate)" />
+      <param name="cutoff_frequency" value="$(arg cutoff_frequency)" />
+      <param name="arm_id" value="$(arg arm_id)" />
+      <param name="use_imu" value="$(arg ec_use_imu)" />
+      <param name="interface" value="$(arg ec_interface)" />
+      <remap from="/ft_sensor/$(arg ec_interface)/ft_raw" to="/ft_sensor/ft_raw"/>
+    </node>
+  </group>
+
+</launch>

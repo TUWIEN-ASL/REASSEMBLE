@@ -1,0 +1,9 @@
+<launch>
+    <arg name="base_path"           default="/home/asl_team/data_test"/>	
+    
+    <!-- Launch the Audio Processor Node -->
+    <node name="audio_processor" pkg="asr_ros" type="audio_process.py" output="screen">
+        <param name="base_path" value="$(arg base_path)"/>
+    </node>
+
+</launch>

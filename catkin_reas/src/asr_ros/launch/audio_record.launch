@@ -1,0 +1,17 @@
+<launch>
+  <arg name="base_path"           default="/home/asl_team/data_test"/>	
+  <arg name="audio_device"           default="hw:4"/>	
+
+  <!-- Include the capture_wave.launch file -->
+  <include file="$(find audio_capture)/launch/capture_wave.launch">
+    <arg name="device"      value="$(arg audio_device)"/>
+    <arg name="channels"    value="2" />
+    <arg name="sample_rate" value="32000" />
+  </include>
+
+  <!-- Include the record_audio.launch file -->
+  <node name="audio_recorder_node" pkg="asr_ros" type="record_audio.py" output="screen">
+    <param name="base_path" value="$(arg base_path)"/>
+  </node>
+
+</launch>

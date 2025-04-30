@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="aidinFTSensor">
+  <!-- safety_distance: Minimum safety distance in [m] by which the collision volumes are expanded and which is enforced during robot motions -->
+  <xacro:macro name="aidin_sensor" params="connected_to:='' arm_id:='panda' rpy:='0 0 0' xyz:='0 0 0' tcp_xyz:='0 0 0.1034' tcp_rpy:='0 0 0' safety_distance:=0 gazebo:=false">
+    <xacro:unless value="${connected_to == ''}">
+      <joint name="${arm_id}_ee_flanch" type="fixed">
+        <parent link="${connected_to}" />
+        <child link="${arm_id}_flanch_mount" />
+        <origin xyz="${xyz}" rpy="${rpy}" />
+      </joint>
+    </xacro:unless>
+
+    <!-- <xacro:link_with_sc name="hand" gazebo="${gazebo}">
+      <self_collision_geometries>
+        <xacro:collision_capsule xyz="0 0 0.04" direction="y" radius="${0.04+safety_distance}" length="0.1" />
+        <xacro:collision_capsule xyz="0 0 0.10" direction="y" radius="${0.02+safety_distance}" length="0.1" />
+      </self_collision_geometries>
+    </xacro:link_with_sc> -->
+
+    <!-- Define the hand_tcp frame -->
+    <link name="${arm_id}_flanch_mount">
+      <visual>
+        <geometry>
+          <mesh filename="package://aidin_description/meshes/AFTflangemount.stl" />
+        </geometry>
+      </visual>
+      <!-- screw mount -->
+      <!-- <collision>
+        <origin xyz="0 0 -5.5e-3" rpy="0 0 0" />
+        <geometry>
+            <cylinder length="11e-3" radius="40e-3"/>
+        </geometry>
+      </collision> -->
+    </link>
+
+    <link name="${arm_id}_sensor">
+        <visual>
+          <geometry>
+            <mesh filename="package://aidin_description/meshes/AFTsensor.stl" />
+          </geometry>
+        </visual>
+        <!-- screw mount -->
+        <!-- <collision>
+          <origin xyz="0 0 -11.5e-3" rpy="0 0 0" />
+          <geometry>
+              <cylinder length="23e-3" radius="40e-3"/>
+          </geometry>
+        </collision>
+        <collision>
+            <origin xyz="-45e-3 0 -11.5e-3" rpy="0 0 0" />
+            <geometry>
+                <box size="40e-3 40e-3 20e-3" />
+            </geometry>
+          </collision> -->
+      </link>
+
+      <link name="${arm_id}_hand_mount">
+        <visual>
+          <geometry>
+            <mesh filename="package://aidin_description/meshes/AFThandmount.stl" />
+          </geometry>
+        </visual>
+        <!-- screw mount -->
+        <!-- <collision>
+          <origin xyz="0 0 -6.25e-3" rpy="0 0 0" />
+          <geometry>
+              <cylinder length="12.5e-3" radius="31.75e-3"/>
+          </geometry>
+        </collision> -->
+      </link>
+
+      <joint name="${arm_id}_flanch_sensor_joint" type="fixed">
+        <parent link="${arm_id}_flanch_mount" />
+        <child link="${arm_id}_sensor" />
+        <origin xyz="0 0 -32e-3" rpy="3.1415 0 0" />
+      </joint>
+
+      <joint name="${arm_id}_sensor_hand" type="fixed">
+        <parent link="${arm_id}_sensor" />
+        <child link="${arm_id}_hand_mount" />
+        <origin xyz="0 0 0" rpy="3.1415 0 0" />
+      </joint>
+
+  </xacro:macro>
+</robot>

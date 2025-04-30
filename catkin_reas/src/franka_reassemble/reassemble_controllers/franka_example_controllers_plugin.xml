@@ -1,0 +1,93 @@
+<library path="lib/libreassemble_controllers">
+  <class name="reassemble_controllers/JointVelocityExampleController" type="reassemble_controllers::JointVelocityExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that executes a short motion based on joint velocities to demonstrate correct usage
+    </description>
+  </class>
+  <class name="reassemble_controllers/JointPositionExampleController" type="reassemble_controllers::JointPositionExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that executes a short motion based on joint positions to demonstrate correct usage
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianPoseExampleController" type="reassemble_controllers::CartesianPoseExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that executes a short motion based on cartesian poses to demonstrate correct usage
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianVelocityExampleController" type="reassemble_controllers::CartesianVelocityExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that executes a short motion based on cartesian velocities to demonstrate correct usage
+    </description>
+  </class>
+  <class name="reassemble_controllers/ElbowExampleController" type="reassemble_controllers::ElbowExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that executes a short motion based on cartesian poses and elbow to demonstrate correct usage
+    </description>
+  </class>
+  <class name="reassemble_controllers/ModelExampleController" type="reassemble_controllers::ModelExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that evaluates and prints the dynamic model of Franka
+    </description>
+  </class>
+  <class name="reassemble_controllers/JointImpedanceExampleController" type="reassemble_controllers::JointImpedanceExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that tracks a cartesian path with a joint impedance controller that compensates coriolis torques. The torque commands are compared to measured torques in Console outputs.
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianImpedanceExampleController" type="reassemble_controllers::CartesianImpedanceExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that renders a spring damper system in cartesian space. Compliance parameters and the equilibrium pose can be modified online with dynamic reconfigure and an interactive marker respectively.
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianImpedanceControllerDampingRatio" type="reassemble_controllers::CartesianImpedanceControllerDampingRatio" base_class_type="controller_interface::ControllerBase">
+    <description>
+      Improved version of the default cartesian impedance controller. A controller that renders a spring damper system in cartesian space. Compliance parameters and the equilibrium pose can be modified online with dynamic reconfigure and an interactive marker respectively.
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianVariableImpedanceControllerDampingRatio" type="reassemble_controllers::CartesianVariableImpedanceControllerDampingRatio" base_class_type="controller_interface::ControllerBase">
+    <description>
+      Improved version of the default cartesian impedance controller. A controller that renders a spring damper system in cartesian space. Compliance parameters and the equilibrium pose can be modified with the corresponding rostopics.
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianVariableImpedanceController" type="reassemble_controllers::CartesianVariableImpedanceController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that renders a spring damper system in cartesian space. Compliance parameters, the equilibrium pose, desired velocities and desired wrench can be modified with the corresponding rostopics.
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianVariableImpedanceControllerPassive" type="reassemble_controllers::CartesianVariableImpedanceControllerPassive" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that renders a spring damper system in cartesian space. Compliance parameters, the equilibrium pose, desired velocities and desired wrench can be modified with the corresponding rostopics. Energy-tank based passivity ensures passivity of the controller.
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianVariableImpedanceControllerPassiveMultidim" type="reassemble_controllers::CartesianVariableImpedanceControllerPassiveMultidim" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that renders a spring damper system in cartesian space. Compliance parameters, the equilibrium pose, desired velocities and desired wrench can be modified with the corresponding rostopics. Energy-tank based passivity ensures passivity of the controller. Using vector instead of scalar value allows to adjust compliance in specific directions.
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianVariableImpedanceControllerPassiveDRMultidim" type="reassemble_controllers::CartesianVariableImpedanceControllerPassiveDRMultidim" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that renders a spring damper system in cartesian space. Compliance parameters, the equilibrium pose, desired velocities and desired wrench can be modified with the corresponding rostopics. Energy-tank based passivity ensures passivity of the controller. Damping ratio can be adjusted (default: 1). Using vector instead of scalar value allows to adjust compliance in specific directions.
+    </description>
+  </class>
+  <class name="reassemble_controllers/ForceExampleController" type="reassemble_controllers::ForceExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A PI controller that applies a force corresponding to a user-provided desired mass in the z axis. The desired mass value can be modified online with dynamic reconfigure.
+    </description>
+  </class>
+  <class name="reassemble_controllers/DualArmCartesianImpedanceExampleController" type="reassemble_controllers::DualArmCartesianImpedanceExampleController" base_class_type="controller_interface::ControllerBase">
+      <description>
+          A controller that renders Cartesian impedance based tracking of separate target poses for 2 panda arms.
+      </description>
+  </class>
+  <class name="reassemble_controllers/TeleopJointPDExampleController" type="reassemble_controllers::TeleopJointPDExampleController" base_class_type="controller_interface::ControllerBase">
+      <description>
+          A PD controller that tracks position and velocity of the leader arm and applies it to the follower arm. It also applies force-feedback to the leader arm.
+      </description>
+  </class>
+
+  <class name="reassemble_controllers/CartesianVICTeleop" type="reassemble_controllers::CartesianVICTeleop" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that renders a spring damper system in cartesian space. Compliance parameters, the equilibrium pose, desired velocities and desired wrench can be modified with the corresponding rostopics. Energy-tank based passivity ensures passivity of the controller. Can be uses with teleoperation to allow humans for applying corrections.
+    </description>
+  </class>
+</library>

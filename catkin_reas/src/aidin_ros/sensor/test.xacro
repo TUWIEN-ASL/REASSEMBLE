@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<robot name="test" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find aidin_description)/sensor/aidin_sensor.xacro"/>
+  <xacro:aidin_sensor/>
+</robot>

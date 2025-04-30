@@ -15,4 +15,5 @@ services:
       - /dev/hidraw1
       - /dev/hidraw2
       - /dev/hidraw3
+      - "/dev/bus/usb:/dev/bus/usb"
     command: /bin/bash

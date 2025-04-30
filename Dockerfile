@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     lsb-release curl \
     && apt install -y software-properties-common 
 
-# The gpg key times out if "*libfranka*" is not removed first
+# Installing libfranka ("*libfranka*" must be removed first to avoid conflict)
 RUN apt-get remove "*libfranka*" \
     && git clone --recurse-submodules https://github.com/frankaemika/libfranka.git && cd libfranka && git checkout 0.13.4 && git submodule update \
     && mkdir build && cd build \
@@ -23,7 +23,7 @@ RUN apt-get remove "*libfranka*" \
     && rm -rf /var/lib/apt/lists/* 
 WORKDIR /
 
-# Get iir filter library SOMETIMES IT TIMES OUT - WHY?
+# Get iir filter library
 RUN apt-get update && apt install -y ros-noetic-soem ros-noetic-ethercat-grant
 RUN add-apt-repository ppa:berndporr/dsp && \
     apt install iir1 iir1-dev
@@ -31,10 +31,8 @@ RUN add-apt-repository ppa:berndporr/dsp && \
 # Setup rosdep
 RUN rosdep update
 
-# Create workspace directory
+# Create workspace directory and copy the corresponding source files
 WORKDIR /root/catkin_reas
-
-# Copy the repository into the container
 COPY ./catkin_reas/src ./src
 
 # Install ROS package dependencies
@@ -48,7 +46,6 @@ RUN apt-get update && apt-get install -y \
 
 # Copy dependencies into the docker container
 COPY catkin_reas/src/haptic_ros/lib/libdhd.so /asl_libs/haptic/lib/libdhd.so.3
-COPY asl_libs/franka_reassemble/* /catkin_reas/src/franka_ros/
 
 # Omega haptic device SDK
 WORKDIR /asl_libs/omega-sdk-3.17.6
@@ -59,23 +56,34 @@ RUN pip3 install pytransform3d
 ENV PYTHONPATH=/usr/lib/python3/dist-packages:$PYTHONPATH
 
 # ECI USB driver installation
-# min-max calculations in OsEci.h have to be removed
 WORKDIR /asl_libs
 RUN curl -L -o eci-linux.zip https://hmsnetworks.blob.core.windows.net/nlw/docs/default-source/products/ixxat/monitored/pc-interface-cards/eci-linux.zip \
     && python3 -c "import zipfile; zipfile.ZipFile('eci-linux.zip').extractall()" \
     && rm eci-linux.zip
 COPY /asl_libs/OsEci.h /asl_libs/EciLinux_amd64/inc/OsEci.h
+# RUN apt-get update && apt-get install -y \
+#     udev
 RUN mkdir -p /etc/udev/rules.d \
     && cd /asl_libs/EciLinux_amd64/src/KernelModule \
     && make install-usb
+# RUN cp /asl_libs/EciLinux_amd64/lib/libeci113DriverLinux-usb-1.0.so.1 /usr/local/lib/ \
+#     && ldconfig
+
+# NatNet
+# RUN apt-get update && apt install -y ros-$ROS_DISTRO-tf2* wget
+# RUN apt-get upgrade
 
 # Build the workspace
 WORKDIR /root/catkin_reas
-RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build" 
-# RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -DCMAKE_VERBOSE_MAKEFILE=ON -j1 VERBOSE=1" 
+# RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build" 
+RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -DCMAKE_VERBOSE_MAKEFILE=ON -j1 VERBOSE=1" 
 
 # Source the workspace automatically
 RUN echo "source /root/catkin_reas/devel/setup.bash" >> ~/.bashrc
+
+# # Install python packages for recording
+# COPY ./requirements_recording.txt /requirements_recording.txt
+# RUN python3 -m pip install -r /requirements_recording.txt
 
 # Set default working directory
 WORKDIR /root/catkin_reas
