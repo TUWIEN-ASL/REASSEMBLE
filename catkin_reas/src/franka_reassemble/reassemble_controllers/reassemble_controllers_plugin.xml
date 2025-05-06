@@ -1,0 +1,12 @@
+<library path="lib/libreassemble_controllers">
+  <class name="reassemble_controllers/CartesianImpedanceExampleController" type="reassemble_controllers::CartesianImpedanceExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that renders a spring damper system in cartesian space. Compliance parameters and the equilibrium pose can be modified online with dynamic reconfigure and an interactive marker respectively.
+    </description>
+  </class>
+  <class name="reassemble_controllers/CartesianImpedanceControllerDampingRatio" type="reassemble_controllers::CartesianImpedanceControllerDampingRatio" base_class_type="controller_interface::ControllerBase">
+    <description>
+      Improved version of the default cartesian impedance controller. A controller that renders a spring damper system in cartesian space. Compliance parameters and the equilibrium pose can be modified online with dynamic reconfigure and an interactive marker respectively.
+    </description>
+  </class>
+</library>

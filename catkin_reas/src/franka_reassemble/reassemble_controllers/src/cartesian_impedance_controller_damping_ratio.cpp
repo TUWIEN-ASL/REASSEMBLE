@@ -1,8 +1,8 @@
-// Copyright (c) 2017 Franka Emika GmbH
-// Use of this source code is governed by the Apache-2.0 license, see LICENSE
-#include <franka_example_controllers/cartesian_impedance_controller_damping_ratio.h>
+// Modified version of the original Franka controller from the repository franka_ros
+// Created at Autonomous Systems Lab TU Wien
+#include <reassemble_controllers/cartesian_impedance_controller_damping_ratio.h>
 
-#include <franka_example_controllers/nullspace_optim.h>
+#include <reassemble_controllers/nullspace_optim.h>
 
 #include <cmath>
 #include <memory>
@@ -14,7 +14,7 @@
 
 #include <franka_example_controllers/pseudo_inversion.h>
 
-namespace franka_example_controllers {
+namespace reassemble_controllers {
 
 bool CartesianImpedanceControllerDampingRatio::init(hardware_interface::RobotHW* robot_hw,
                                                ros::NodeHandle& node_handle) {
@@ -92,7 +92,7 @@ bool CartesianImpedanceControllerDampingRatio::init(hardware_interface::RobotHW*
       ros::NodeHandle(node_handle.getNamespace() + "/dynamic_reconfigure_compliance_param_node");
 
   dynamic_server_compliance_param_ = std::make_unique<
-      dynamic_reconfigure::Server<franka_example_controllers::compliance_paramConfig>>(
+      dynamic_reconfigure::Server<reassemble_controllers::compliance_paramConfig>>(
 
       dynamic_reconfigure_compliance_param_node_);
   dynamic_server_compliance_param_->setCallback(
@@ -202,7 +202,7 @@ void CartesianImpedanceControllerDampingRatio::update(const ros::Time& /*time*/,
   // pseudoinverse for nullspace handling
   // kinematic pseuoinverse
   Eigen::MatrixXd jacobian_transpose_pinv;
-  pseudoInverse(jacobian.transpose(), jacobian_transpose_pinv);
+  franka_example_controllers::pseudoInverse(jacobian.transpose(), jacobian_transpose_pinv);
 
   // Cartesian PD control with damping ratio = 1
   // tau_task << jacobian.transpose() *
@@ -290,7 +290,7 @@ Eigen::Matrix<double, 7, 1> CartesianImpedanceControllerDampingRatio::saturateTo
 }
 
 void CartesianImpedanceControllerDampingRatio::complianceParamCallback(
-    franka_example_controllers::compliance_paramConfig& config,
+  reassemble_controllers::compliance_paramConfig& config,
     uint32_t /*level*/) {
   cartesian_stiffness_target_.setIdentity();
   cartesian_stiffness_target_.topLeftCorner(3, 3)
@@ -337,5 +337,5 @@ void CartesianImpedanceControllerDampingRatio::velDCallback(
 
 }  // namespace franka_example_controllers
 
-PLUGINLIB_EXPORT_CLASS(franka_example_controllers::CartesianImpedanceControllerDampingRatio,
+PLUGINLIB_EXPORT_CLASS(reassemble_controllers::CartesianImpedanceControllerDampingRatio,
                        controller_interface::ControllerBase)

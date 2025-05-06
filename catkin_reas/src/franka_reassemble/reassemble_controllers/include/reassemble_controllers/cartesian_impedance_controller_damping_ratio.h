@@ -1,5 +1,5 @@
-// Copyright (c) 2017 Franka Emika GmbH
-// Use of this source code is governed by the Apache-2.0 license, see LICENSE
+// Modified version of the original Franka controller from the repository franka_ros
+// Created at Autonomous Systems Lab TU Wien
 #pragma once
 
 #include <memory>

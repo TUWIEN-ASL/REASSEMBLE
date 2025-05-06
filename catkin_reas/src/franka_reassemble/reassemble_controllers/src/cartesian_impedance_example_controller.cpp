@@ -1,6 +1,6 @@
-// Copyright (c) 2017 Franka Emika GmbH
-// Use of this source code is governed by the Apache-2.0 license, see LICENSE
-#include <franka_example_controllers/cartesian_impedance_example_controller.h>
+// Modified version of the original Franka controller from the repository franka_ros
+// Created at Autonomous Systems Lab TU Wien
+#include <reassemble_controllers/cartesian_impedance_example_controller.h>
 
 #include <cmath>
 #include <memory>
@@ -13,7 +13,7 @@
 
 #include <franka_example_controllers/pseudo_inversion.h>
 
-namespace franka_example_controllers {
+namespace reassemble_controllers {
   ros::Publisher tau_d_publisher_;
 
 bool CartesianImpedanceExampleController::init(hardware_interface::RobotHW* robot_hw,
@@ -92,7 +92,7 @@ bool CartesianImpedanceExampleController::init(hardware_interface::RobotHW* robo
       ros::NodeHandle(node_handle.getNamespace() + "/dynamic_reconfigure_compliance_param_node");
 
   dynamic_server_compliance_param_ = std::make_unique<
-      dynamic_reconfigure::Server<franka_example_controllers::compliance_paramConfig>>(
+      dynamic_reconfigure::Server<reassemble_controllers::compliance_paramConfig>>(
 
       dynamic_reconfigure_compliance_param_node_);
   dynamic_server_compliance_param_->setCallback(
@@ -171,7 +171,7 @@ void CartesianImpedanceExampleController::update(const ros::Time& /*time*/,
   // pseudoinverse for nullspace handling
   // kinematic pseuoinverse
   Eigen::MatrixXd jacobian_transpose_pinv;
-  pseudoInverse(jacobian.transpose(), jacobian_transpose_pinv);
+  franka_example_controllers::pseudoInverse(jacobian.transpose(), jacobian_transpose_pinv);
 
   // Cartesian PD control with damping ratio = 1
   tau_task << jacobian.transpose() *
@@ -187,10 +187,10 @@ void CartesianImpedanceExampleController::update(const ros::Time& /*time*/,
   // Desired torque
   tau_d << tau_task + tau_nullspace + coriolis;
 
-  ROS_ERROR_STREAM("Error" << std::endl << error << std::endl);
-  ROS_ERROR_STREAM("tau_task" << std::endl << tau_task << std::endl);
-  ROS_ERROR_STREAM("tau_nullspace" << std::endl << tau_nullspace << std::endl);
-  ROS_ERROR_STREAM("tau_d" << std::endl << tau_d << std::endl);
+  // ROS_ERROR_STREAM("Error" << std::endl << error << std::endl);
+  // ROS_ERROR_STREAM("tau_task" << std::endl << tau_task << std::endl);
+  // ROS_ERROR_STREAM("tau_nullspace" << std::endl << tau_nullspace << std::endl);
+  // ROS_ERROR_STREAM("tau_d" << std::endl << tau_d << std::endl);
 
   // exit(-1);
 
@@ -234,7 +234,7 @@ Eigen::Matrix<double, 7, 1> CartesianImpedanceExampleController::saturateTorqueR
 }
 
 void CartesianImpedanceExampleController::complianceParamCallback(
-    franka_example_controllers::compliance_paramConfig& config,
+    reassemble_controllers::compliance_paramConfig& config,
     uint32_t /*level*/) {
   cartesian_stiffness_target_.setIdentity();
   cartesian_stiffness_target_.topLeftCorner(3, 3)
@@ -265,5 +265,5 @@ void CartesianImpedanceExampleController::equilibriumPoseCallback(
 
 }  // namespace franka_example_controllers
 
-PLUGINLIB_EXPORT_CLASS(franka_example_controllers::CartesianImpedanceExampleController,
+PLUGINLIB_EXPORT_CLASS(reassemble_controllers::CartesianImpedanceExampleController,
                        controller_interface::ControllerBase)

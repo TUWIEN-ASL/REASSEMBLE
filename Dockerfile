@@ -26,14 +26,14 @@ WORKDIR /
 # Get iir filter library
 RUN apt-get update && apt install -y ros-noetic-soem ros-noetic-ethercat-grant
 RUN add-apt-repository ppa:berndporr/dsp && \
-    apt install iir1 iir1-dev
+    apt-get install iir1 iir1-dev
 
 # Setup rosdep
 RUN rosdep update
 
 # Create workspace directory and copy the corresponding source files
 WORKDIR /root/catkin_reas
-COPY ./catkin_reas/src ./src
+COPY catkin_reas/src src
 
 # Install ROS package dependencies
 RUN apt-get update \
@@ -53,39 +53,30 @@ RUN curl -L -o sdk.tar.gz https://downloads.forcedimension.com/sdk/sdk-3.17.6-li
     && tar -xzf sdk.tar.gz --strip-components=1 \
     && rm sdk.tar.gz
 RUN pip3 install pytransform3d
-ENV PYTHONPATH=/usr/lib/python3/dist-packages:$PYTHONPATH
+ENV PYTHONPATH=/usr/lib/python3/dist-packages
 
 # ECI USB driver installation
 WORKDIR /asl_libs
 RUN curl -L -o eci-linux.zip https://hmsnetworks.blob.core.windows.net/nlw/docs/default-source/products/ixxat/monitored/pc-interface-cards/eci-linux.zip \
     && python3 -c "import zipfile; zipfile.ZipFile('eci-linux.zip').extractall()" \
     && rm eci-linux.zip
-COPY /asl_libs/OsEci.h /asl_libs/EciLinux_amd64/inc/OsEci.h
-# RUN apt-get update && apt-get install -y \
-#     udev
-RUN mkdir -p /etc/udev/rules.d \
-    && cd /asl_libs/EciLinux_amd64/src/KernelModule \
-    && make install-usb
-# RUN cp /asl_libs/EciLinux_amd64/lib/libeci113DriverLinux-usb-1.0.so.1 /usr/local/lib/ \
-#     && ldconfig
+COPY /asl_libs/OsEci.h ./EciLinux_amd64/inc/OsEci.h
+RUN apt-get update && apt-get install -y udev \
+    && mkdir -p /etc/udev/rules.d \
+    && cd ./EciLinux_amd64/src/KernelModule \
+    && /bin/bash -c "source /opt/ros/noetic/setup.bash && make install-usb" \
+    && ldconfig    
 
-# NatNet
-# RUN apt-get update && apt install -y ros-$ROS_DISTRO-tf2* wget
-# RUN apt-get upgrade
-
-# Build the workspace
+# Build the workspace (build natnet_ros_cpp first)
 WORKDIR /root/catkin_reas
-# RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build" 
-RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -DCMAKE_VERBOSE_MAKEFILE=ON -j1 VERBOSE=1" 
+RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make --pkg natnet_ros_cpp"
+RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build"
+# RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=/libfranka/build -DCMAKE_VERBOSE_MAKEFILE=ON -j1 VERBOSE=1"
+# RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_make -DCMAKE_BUILD_TYPE=Debug -DFranka_DIR:PATH=/libfranka/build -DCMAKE_VERBOSE_MAKEFILE=ON -j1 VERBOSE=1" 
 
 # Source the workspace automatically
 RUN echo "source /root/catkin_reas/devel/setup.bash" >> ~/.bashrc
 
-# # Install python packages for recording
-# COPY ./requirements_recording.txt /requirements_recording.txt
-# RUN python3 -m pip install -r /requirements_recording.txt
-
 # Set default working directory
 WORKDIR /root/catkin_reas
-
 CMD ["/bin/bash"]

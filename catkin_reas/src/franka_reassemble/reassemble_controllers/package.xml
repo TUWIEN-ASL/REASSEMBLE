@@ -34,6 +34,7 @@
   <depend>roscpp</depend>
   <depend>urdf</depend>
   <depend>visualization_msgs</depend>
+  <depend>franka_example_controllers</depend>
 
   <exec_depend>franka_control</exec_depend>
   <exec_depend>reassemble_description</exec_depend>

@@ -31,6 +31,10 @@ if(NOT Franka_FOUND)
   find_package(Franka 0.8.0 REQUIRED)
 endif()
 
+find_package(catkin REQUIRED COMPONENTS
+franka_example_controllers
+)
+
 # merge Franka + INCLUDE_DIRS in topological order
 list_insert_in_workspace_order(catkin_INCLUDE_DIRS ${Franka_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
@@ -74,9 +78,10 @@ catkin_package(
 add_library(reassemble_controllers
   src/cartesian_impedance_controller_damping_ratio.cpp
   src/cartesian_impedance_example_controller.cpp
-  src/cartesian_variable_impedance_controller_passive.cpp
-  src/cartesian_velocity_example_controller.cpp
-  src/cartesian_VIC_teleop.cpp
+  # src/cartesian_variable_impedance_controller_passive.cpp
+  # src/cartesian_velocity_example_controller.cpp
+  # src/cartesian_VIC_teleop.cpp
+
   # src/elbow_example_controller.cpp
   # src/cartesian_pose_example_controller.cpp
   # src/cartesian_velocity_example_controller.cpp
@@ -98,44 +103,56 @@ add_library(reassemble_controllers
   # src/cartesian_VIC_teleop.cpp
 )
 
-# add_dependencies(franka_example_controllers
-#   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#   ${catkin_EXPORTED_TARGETS}
-#   ${PROJECT_NAME}_generate_messages_cpp
-#   ${PROJECT_NAME}_gencpp
-#   ${PROJECT_NAME}_gencfg
-# )
+add_dependencies(reassemble_controllers
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${catkin_EXPORTED_TARGETS}
+  # ${PROJECT_NAME}_generate_messages_cpp
+  # ${PROJECT_NAME}_gencpp
+  ${PROJECT_NAME}_gencfg
+)
 
-# target_link_libraries(franka_example_controllers PUBLIC
-#   ${Franka_LIBRARIES}
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(reassemble_controllers PUBLIC
+  ${Franka_LIBRARIES}
+  ${catkin_LIBRARIES}
+)
 
-# target_include_directories(franka_example_controllers SYSTEM PUBLIC
-#   ${EIGEN3_INCLUDE_DIRS}
-#   ${catkin_INCLUDE_DIRS}
-# )
-# target_include_directories(franka_example_controllers PUBLIC
-#   include
-# )
+include_directories(SYSTEM PUBLIC
+  ${EIGEN3_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
+)
+include_directories(PUBLIC
+  include
+)
+catkin_package(
+  CATKIN_DEPENDS franka_example_controllers
+  DEPENDS dynamic_reconfigure
+)
 
-# add_executable(teleop_gripper_node
-#   src/teleop_gripper_node.cpp
-# )
-# target_include_directories(teleop_gripper_node PUBLIC
-#   ${catkin_INCLUDE_DIRS}
-# )
-# target_link_libraries(teleop_gripper_node PUBLIC
-#   ${Franka_LIBRARIES}
-#   ${catkin_LIBRARIES}
-# )
-# add_dependencies(teleop_gripper_node
-#   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#   ${catkin_EXPORTED_TARGETS}
-#   ${PROJECT_NAME}_generate_messages_cpp
-#   ${PROJECT_NAME}_gencpp
-#   ${PROJECT_NAME}_gencfg
-# )
+target_include_directories(reassemble_controllers SYSTEM PUBLIC
+  ${EIGEN3_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
+)
+target_include_directories(reassemble_controllers PUBLIC
+  include
+)
+
+add_executable(reas_teleop_gripper_node
+  src/teleop_gripper_node.cpp
+)
+target_include_directories(reas_teleop_gripper_node PUBLIC
+  ${catkin_INCLUDE_DIRS}
+)
+target_link_libraries(reas_teleop_gripper_node PUBLIC
+  ${Franka_LIBRARIES}
+  ${catkin_LIBRARIES}
+)
+add_dependencies(reas_teleop_gripper_node
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${catkin_EXPORTED_TARGETS}
+  # ${PROJECT_NAME}_generate_messages_cpp
+  # ${PROJECT_NAME}_gencpp
+  ${PROJECT_NAME}_gencfg
+)
 
 ## Installation
 install(TARGETS reassemble_controllers
