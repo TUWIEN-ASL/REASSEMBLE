@@ -1,0 +1,27 @@
+<!--
+
+rosrun aidin_ros pub_fake_imu.py
+roslaunch panda_moveit_config franka_control.launch robot_ip:=franka load_gripper:=false
+roslaunch force_torque_sensor_calib franka_ft_calib.launch 
+
+-->
+
+<launch>
+  <arg name="load_gripper" default="true" />
+  <arg name="robot_ip" />
+
+  <!-- Node to publish fake IMU data -->
+  <node name="pub_fake_imu" pkg="aidin_ros" type="pub_fake_imu.py" output="screen" >
+    <param name="arm_id" value="panda"/>
+  </node>
+
+  <!-- Launch Panda MoveIt configuration -->
+  <!-- <include file="$(find panda_moveit_config)/launch/franka_control.launch"> -->
+  <include file="$(find reassemble_control)/launch/franka_control.launch">
+    <arg name="robot_ip" value="$(arg robot_ip)"/>
+    <arg name="load_gripper" value="$(arg load_gripper)"/>
+  </include>
+
+  <!-- Launch force torque sensor calibration -->
+  <include file="$(find reassemble_ft_calib)/launch/franka_ft_calib.launch"/>
+</launch>

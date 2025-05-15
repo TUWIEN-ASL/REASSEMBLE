@@ -1,0 +1,27 @@
+# Config parameter for the master device (tuned for real robot)
+# Viscous damping force
+MAX_FRICTION_FORCE: 2 # 2.5 # Maximum static friction
+# FRICTION_SAT_REGION: 0.05 # Region for friction saturation
+TRANSLATIONAL_VISCOSITY: 40 #40 # [N/(m/s)]
+ANGULAR_VISCOSITY: 0.04 # [Nm/(rad/s)]
+
+# Centering force
+CENTERING_SAT_REGION: 0.06 # Region saturation centering
+KP_CENTERING: 50 # Centering force gain (27.0)
+
+# Feedback force
+MAX_FEEDBACK_FORCE: 10 #5 # N
+SCALE_FEEDBACK_FORCE: 0.35 #0.4
+
+# Control force filter
+FILTER_MINCUTOFF: 5 #5 #35.0 # Hz
+FILTER_BETA: 20 #20 #0.5
+
+# Twist filter
+K_LOWPASS: 0.3
+
+# Devices
+SERIAL_NUMBER_OMEGA3: 11501 # Omega3
+SERIAL_NUMBER_OMEGA6: 11706 # Omega6
+
+# Compliance settings

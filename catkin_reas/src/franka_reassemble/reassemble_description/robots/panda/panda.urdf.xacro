@@ -2,13 +2,13 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
 
   <!-- <xacro:include filename="$(find franka_description)/robots/common/franka_robot_default.xacro"/> -->
-  <xacro:include filename="$(find franka_description)/robots/common/franka_robot_FT.xacro"/>
+  <xacro:include filename="$(find reassemble_description)/robots/common/franka_robot_FT.xacro"/>
   <!-- <xacro:include filename="$(find franka_description)/robots/common/franka_robot_hotwire.xacro"/> -->
 
   <xacro:arg name="arm_id" default="panda" />
 
   <xacro:franka_robot arm_id="$(arg arm_id)"
-                      joint_limits="${xacro.load_yaml('$(find franka_description)/robots/panda/joint_limits.yaml')}">
+                      joint_limits="${xacro.load_yaml('$(find reassemble_description)/robots/panda/joint_limits.yaml')}">
   </xacro:franka_robot>
 
 </robot>

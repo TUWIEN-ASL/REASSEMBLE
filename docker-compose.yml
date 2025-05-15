@@ -4,6 +4,7 @@ services:
     container_name: reassemble
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
+      # - /dev:/dev
     tty: True
     environment:
       - DISPLAY=${DISPLAY}
@@ -11,6 +12,7 @@ services:
       # --- Addresses ---
       - ROBOT_IP=172.16.3.2
       - ROBOT_TYPE=fr3
+      # - ARM_ID=fr3
       # - ROBOT_SERVER_IP=
       # - GPU_IP= 
     network_mode: host

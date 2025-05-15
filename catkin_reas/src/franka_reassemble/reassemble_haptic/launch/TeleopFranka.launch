@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- Arguments -->
+	<arg name="record" default="false" />
+	<arg name="use_sim" default="true" />
+	<arg name="use_gripper" default="true" />
+	<arg name="use_ft_sensor" default="true" />
+	<arg name="arm_id" />
+	<arg name="robot_ip" />
+	<!-- <arg name="controller" value="cartesian_impedance_example_controller" /> -->
+	<!-- <arg name="controller" value="cartesian_variable_impedance_controller_passive" /> -->
+	<arg name="controller" value="cartesian_impedance_controller_damping_ratio" />
+	<!-- <arg name="controller" value="cartesian_variable_impedance_controller_damping_ratio" /> -->
+	<arg name="haptic_z_rotation_deg" default="0" />
+
+	<!-- Start Controller -->
+	<!-- Control in Simulation robot -->
+	<group if="$(arg use_sim)">
+		<include file="$(find franka_gazebo)/launch/sim2.launch" pass_all_args="true">
+		<arg name="robot" value="$(arg arm_id)" />
+		<arg name="use_gripper" value="$(arg use_gripper)" />
+		<arg name="controller" value="$(arg controller)" />
+		<arg name="interactive_marker" value="false" />
+		</include>
+	</group>
+	<!-- Control real robot -->
+	<group unless="$(arg use_sim)">
+		<include file="$(find reassemble_controllers)/launch/select_controller.launch" pass_all_args="true">
+		<arg name="robot" value="$(arg arm_id)" />
+		<arg name="load_gripper" value="$(arg use_gripper)" />
+		<arg name="launch-prefix" value="sleep 5" />
+		<arg name="controller" value="$(arg controller)" />
+		<arg name="rviz" value="false" />
+		<param name="use_sim_time" value="false" />
+		</include>
+	</group>
+
+	<!-- Run teleop script -->
+	<node name="teleop_franka" pkg="reassemble_haptic" type="teleop_franka.py" output="screen" required="true" >
+		<param name="use_sim" value="$(arg use_sim)"/>
+		<param name="use_gripper" value="$(arg use_gripper)"/>
+		<param name="use_ft_sensor" value="$(arg use_ft_sensor)"/>
+		<param name="haptic_z_rotation_deg" value="$(arg haptic_z_rotation_deg)"/>
+	</node>
+
+	<!-- <node pkg="tf2_ros" type="static_transform_publisher" name="FT_frame_broadcaster" args="0 0 0.031 0.7853982 0 0 fr3_EE ft_sensor" /> -->
+
+	<!-- Datarecording -->
+	<group if="$(arg record)">
+		<include file="$(find record_teleop)/launch/record.launch"/>
+    </group>z
+
+</launch>

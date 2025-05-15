@@ -1,0 +1,17 @@
+<package>
+ <name>reassemble_ft_calib</name>
+  <version>1.2.0</version>
+  <description>
+    Additional launch file for the force_torque_sensor_calib package (http://wiki.ros.org/force_torque_sensor_calib).
+  </description>
+  <license>MIT</license>
+
+  <author email="daniel.sliwowski@tuwien.ac.at">Daniel Sliwowski</author>
+  <maintainer email="daniel.sliwowski@tuwien.ac.at">Daniel Sliwowski</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>aidin_ros</run_depend>
+  <run_depend>panda_moveit_config</run_depend>
+  <run_depend>force_torque_sensor_calib</run_depend>
+</package>

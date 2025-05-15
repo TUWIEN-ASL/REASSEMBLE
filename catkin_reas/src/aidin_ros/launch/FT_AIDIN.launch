@@ -4,11 +4,11 @@
   <!-- Arguments -->
   <arg name="sample_rate" default="1000" />
   <arg name="cutoff_frequency" default="35" />
-  <arg name="arm_id" default="fr3" />
+  <arg name="arm_id" default="panda" />
   <arg name="comm_type" default="can" />
   <arg name="ec_use_imu" default="false" />
-  <!-- <arg name="ec_interface" default="enp9s0" /> -->
-  <arg name="ec_interface" default="enp3s0" />
+  <!-- <arg name="ec_interface" default="enp3s0" /> -->
+  <arg name="ec_interface" />
 
   <!-- CAN sensor -->
   <group if="$(eval arg('comm_type') == 'can')">

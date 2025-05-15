@@ -1,0 +1,5 @@
+<library path="lib/libreassemble_state_controller">
+  <class name="reassemble_control/ReassembleStateController" type="reassemble_control::ReassembleStateController" base_class_type="controller_interface::ControllerBase">
+    <description>A controller that publishes the complete robot state</description>
+  </class>
+</library>

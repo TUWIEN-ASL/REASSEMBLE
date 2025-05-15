@@ -10,7 +10,7 @@ if __name__ == "__main__":
     # listener = tf.TransformListener()
     # rospy.sleep(1)
     
-    arm_id = rospy.get_param("~arm_id", "fr3")
+    arm_id = rospy.get_param("~arm_id")
 
     pub = rospy.Publisher("/imu/data", Imu, queue_size=1)
 
@@ -33,6 +33,7 @@ if __name__ == "__main__":
         msg.header.stamp = now
         # msg.header.frame_id = "panda_link0"
         msg.header.frame_id = arm_id + "_link0"
+        # msg.header.frame_id = "fr3_link0"
 
         msg.linear_acceleration.x = gravity_vec_base[0, 0]
         msg.linear_acceleration.y = gravity_vec_base[1, 0]

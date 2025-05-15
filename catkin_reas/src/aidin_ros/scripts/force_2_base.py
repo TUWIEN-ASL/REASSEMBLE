@@ -63,7 +63,7 @@ class Force2Base:
         rospy.init_node("force_2_base")
 
         self.sub_ft_wrench = rospy.Subscriber("/ft_sensor/ft_compensated", WrenchStamped, self.wrench_cb, queue_size=1)
-        self.sub_robot_state = rospy.Subscriber("/franka_state_controller/franka_states", FrankaState, self.state_cb, queue_size=10)
+        self.sub_robot_state = rospy.Subscriber("/reassemble_state_controller/franka_states", FrankaState, self.state_cb, queue_size=10)
         self.pub_O_F_S = rospy.Publisher("/ft_sensor/ft_compensated_base", WrenchStamped, queue_size=1)
 
         # self.rate = rospy.Rate(self.freq)

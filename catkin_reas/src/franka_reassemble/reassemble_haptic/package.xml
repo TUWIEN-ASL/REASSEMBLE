@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>reassemble_haptic</name>
+  <version>0.0.0</version>
+  <description>Extension for the haptic_ros dirver for teleoperation</description>
+
+  <maintainer email="daniel.sliwowski@tuwien.ac.at">Daniel Sliwowski</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>eigen</build_depend>
+  <!-- <build_depend>tf2</build_depend> -->
+  <depend>eigen_conversions</depend>
+  <!-- <depend>roscpp</depend> -->
+  <exec_depend>roscpp</exec_depend>
+  <!-- <exec_depend>tf2</exec_depend> -->
+
+  <depend>franka_gripper</depend>
+  <depend>haptic_ros_driver</depend>
+</package>

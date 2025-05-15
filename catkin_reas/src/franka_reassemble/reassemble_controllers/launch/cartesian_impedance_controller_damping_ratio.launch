@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <launch>
   <arg name="robot_ip" default="franka" />
-  <arg name="robot" default="fr3" doc="choose your robot. Possible values: [panda, fr3]"/>
+  <arg name="robot" doc="choose your robot. Possible values: [panda, fr3]"/>
   <arg name="arm_id" default="$(arg robot)" />
   
   <!-- <include file="$(find franka_control)/launch/franka_control.launch" pass_all_args="true"/> -->
-  <include file="$(find franka_control)/launch/franka_control.launch" pass_all_args="true">
+  <include file="$(find reassemble_control)/launch/reassemble_control.launch" pass_all_args="true">
     <arg name="robot_ip" value="$(arg robot_ip)" />
   </include>
   
