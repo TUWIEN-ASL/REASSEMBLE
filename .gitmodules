@@ -16,3 +16,6 @@
 [submodule "catkin_reas/src/panda_moveit_config"]
 	path = catkin_reas/src/panda_moveit_config
 	url = https://github.com/moveit/panda_moveit_config.git
+[submodule "catkin_reas/src/dv-ros"]
+	path = catkin_reas/src/dv-ros
+	url = https://gitlab.com/inivation/dv/dv-ros.git

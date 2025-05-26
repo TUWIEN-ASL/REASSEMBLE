@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   tf
+  haptic_ros_driver
 )
 find_package(Eigen3 REQUIRED)
 catkin_package(
@@ -17,6 +18,7 @@ catkin_package(
     roscpp
     franka_gripper
     haptic_ros_driver
+    reassemble_gazebo
 )
 
 catkin_install_python(
@@ -35,9 +37,10 @@ include_directories(
 )
 
 find_library(USB1LIB  libusb-1.0.so)
+# find_library(DHDLIB libdhd.so lib)
 
 add_library(dhd SHARED IMPORTED)
-set_target_properties(dhd PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/haptic_ros/lib/libdhd.so")
+set_target_properties(dhd PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/../../haptic_ros/lib/libdhd.so")
 
 add_executable(HapticDevice src/HapticDevice.cpp src/OneEuroFilter.cpp)
 add_dependencies(HapticDevice ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

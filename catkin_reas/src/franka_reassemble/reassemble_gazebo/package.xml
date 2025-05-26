@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>reassemble_gazebo</name>
+  <version>0.10.1</version>
+  <description>Package for simulation teleoperation in Gazebo.</description>
+
+  <maintainer email="daniel.sliwowski@tuwien.ac.at">Daniel Sliwowski</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>gazebo_dev</build_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <depend>gazebo_ros_control</depend>
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>boost_sml</depend>
+  <depend>control_msgs</depend>
+  <depend>control_toolbox</depend>
+  <depend>controller_manager</depend>
+  <depend>controller_interface</depend>
+  <depend>pluginlib</depend>
+  <depend>kdl_parser</depend>
+  <depend>hardware_interface</depend>
+  <depend>transmission_interface</depend>
+  <depend>joint_limits_interface</depend>
+  <depend>eigen_conversions</depend>
+  <depend>franka_hw</depend>
+  <depend>franka_msgs</depend>
+  <depend>franka_gripper</depend>
+  <depend>franka_example_controllers</depend>
+  <depend>reassemble_controllers</depend>
+  <depend>reassemble_control</depend>
+  <depend>urdf</depend>
+  <depend>angles</depend>
+
+  <depend>franka_gazebo</depend>
+
+  <test_depend>gtest</test_depend>
+  <test_depend>rostest</test_depend>
+  <test_depend>sensor_msgs</test_depend>
+  <test_depend>geometry_msgs</test_depend>
+
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>roslaunch</exec_depend>
+
+  <export>
+    <!--Export gazebo models and worlds-->
+    <!-- <gazebo_ros gazebo_model_path="${prefix}/models"/> -->
+    <gazebo_ros gazebo_resource_path="${prefix}/world"/>
+  </export>
+</package>

@@ -9,14 +9,14 @@
 	<arg name="robot_ip" />
 	<!-- <arg name="controller" value="cartesian_impedance_example_controller" /> -->
 	<!-- <arg name="controller" value="cartesian_variable_impedance_controller_passive" /> -->
-	<arg name="controller" value="cartesian_impedance_controller_damping_ratio" />
+	<arg name="controller" default="cartesian_impedance_controller_damping_ratio" />
 	<!-- <arg name="controller" value="cartesian_variable_impedance_controller_damping_ratio" /> -->
 	<arg name="haptic_z_rotation_deg" default="0" />
 
 	<!-- Start Controller -->
 	<!-- Control in Simulation robot -->
 	<group if="$(arg use_sim)">
-		<include file="$(find franka_gazebo)/launch/sim2.launch" pass_all_args="true">
+		<include file="$(find reassemble_gazebo)/launch/sim2.launch" pass_all_args="true">
 		<arg name="robot" value="$(arg arm_id)" />
 		<arg name="use_gripper" value="$(arg use_gripper)" />
 		<arg name="controller" value="$(arg controller)" />
@@ -41,6 +41,7 @@
 		<param name="use_gripper" value="$(arg use_gripper)"/>
 		<param name="use_ft_sensor" value="$(arg use_ft_sensor)"/>
 		<param name="haptic_z_rotation_deg" value="$(arg haptic_z_rotation_deg)"/>
+		<param name="controller" value="$(arg controller)"/>
 	</node>
 
 	<!-- <node pkg="tf2_ros" type="static_transform_publisher" name="FT_frame_broadcaster" args="0 0 0.031 0.7853982 0 0 fr3_EE ft_sensor" /> -->

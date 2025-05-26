@@ -1,0 +1,229 @@
+reassemble_state_controller:
+  type: reassemble_control/ReassembleStateController
+  publish_rate: 2000  # [Hz]
+  arm_id: $(arg arm_id)
+  joint_names:
+    - $(arg arm_id)_joint1
+    - $(arg arm_id)_joint2
+    - $(arg arm_id)_joint3
+    - $(arg arm_id)_joint4
+    - $(arg arm_id)_joint5
+    - $(arg arm_id)_joint6
+    - $(arg arm_id)_joint7
+
+model_example_controller:
+  type: reassemble_controllers/ModelExampleController
+  arm_id: $(arg arm_id)
+
+force_example_controller:
+  type: reassemble_controllers/ForceExampleController
+  arm_id: $(arg arm_id)
+  joint_names:
+    - $(arg arm_id)_joint1
+    - $(arg arm_id)_joint2
+    - $(arg arm_id)_joint3
+    - $(arg arm_id)_joint4
+    - $(arg arm_id)_joint5
+    - $(arg arm_id)_joint6
+    - $(arg arm_id)_joint7
+
+cartesian_impedance_example_controller:
+  type: reassemble_controllers/CartesianImpedanceExampleController
+  arm_id: $(arg arm_id)
+  joint_names:
+    - $(arg arm_id)_joint1
+    - $(arg arm_id)_joint2
+    - $(arg arm_id)_joint3
+    - $(arg arm_id)_joint4
+    - $(arg arm_id)_joint5
+    - $(arg arm_id)_joint6
+    - $(arg arm_id)_joint7
+
+cartesian_impedance_controller_damping_ratio:
+  type: reassemble_controllers/CartesianImpedanceControllerDampingRatio
+  arm_id: $(arg arm_id)
+  joint_names:
+    - $(arg arm_id)_joint1
+    - $(arg arm_id)_joint2
+    - $(arg arm_id)_joint3
+    - $(arg arm_id)_joint4
+    - $(arg arm_id)_joint5
+    - $(arg arm_id)_joint6
+    - $(arg arm_id)_joint7
+
+cartesian_variable_impedance_controller_damping_ratio:
+    type: reassemble_controllers/CartesianVariableImpedanceControllerDampingRatio
+    arm_id: $(arg arm_id)
+    joint_names:
+      - $(arg arm_id)_joint1
+      - $(arg arm_id)_joint2
+      - $(arg arm_id)_joint3
+      - $(arg arm_id)_joint4
+      - $(arg arm_id)_joint5
+      - $(arg arm_id)_joint6
+      - $(arg arm_id)_joint7
+    K_H_trans: 1000.0
+    K_L_trans: 1.0
+    K_H_rot: 200.0
+    K_L_rot: 0.1
+    damping_ratio: 1.0
+    nullspace_stiffness_: 0.5 #0.1
+    filter_params_: 0.005
+
+cartesian_variable_impedance_controller:
+    type: reassemble_controllers/CartesianVariableImpedanceController
+    arm_id: $(arg arm_id)
+    joint_names:
+        - $(arg arm_id)_joint1
+        - $(arg arm_id)_joint2
+        - $(arg arm_id)_joint3
+        - $(arg arm_id)_joint4
+        - $(arg arm_id)_joint5
+        - $(arg arm_id)_joint6
+        - $(arg arm_id)_joint7
+    K_R_trans: 2000.0 #600
+    K_H_trans: 0.01 #0.1
+    K_R_rot: 10.0 #10
+    K_H_rot: 0.01 #0.01
+    nullspace_stiffness_: 0.01 #0.1
+    filter_params_: 0.005
+
+cartesian_variable_impedance_controller_passive:
+    type: reassemble_controllers/CartesianVariableImpedanceControllerPassive
+    arm_id: $(arg arm_id)
+    joint_names:
+        - $(arg arm_id)_joint1
+        - $(arg arm_id)_joint2
+        - $(arg arm_id)_joint3
+        - $(arg arm_id)_joint4
+        - $(arg arm_id)_joint5
+        - $(arg arm_id)_joint6
+        - $(arg arm_id)_joint7
+    K_R_trans: 1000 #700 #700.0 #600
+    K_H_trans: 0.1 #0.1
+    K_R_rot: 20 #25 #15.0 #10
+    K_H_rot: 0.001 #0.01
+    nullspace_stiffness_: 0.5 #0.1
+    filter_params_: 0.005
+    max_energy_: 500.0
+    min_energy_: 10.0
+    tank_state_: 30 #10 polish #30
+    K_f_: 0.8 #0.8
+    K_I_f_ : 0.01 #0.01 #3.0
+
+cartesian_variable_impedance_controller_passive_multidim:
+    type: reassemble_controllers/CartesianVariableImpedanceControllerPassiveMultidim
+    arm_id: $(arg arm_id)
+    joint_names:
+        - $(arg arm_id)_joint1
+        - $(arg arm_id)_joint2
+        - $(arg arm_id)_joint3
+        - $(arg arm_id)_joint4
+        - $(arg arm_id)_joint5
+        - $(arg arm_id)_joint6
+        - $(arg arm_id)_joint7
+    K_R_trans: 800.0 #700.0 #600
+    K_H_trans: 0.1 #0.1
+    K_R_rot: 15.0 #15.0 #15.0
+    K_H_rot: 0.001 #0.01
+    nullspace_stiffness_: 0.1 #0.1
+    filter_params_: 0.005
+    max_energy_: 500.0
+    min_energy_: 10.0
+    tank_state_: 30 #10 polish #30
+    K_f_: 0.8 #0.8
+    K_I_f_ : 0.01 #0.01 #3.0
+
+cartesian_variable_impedance_controller_passive_dampingratio_multidim:
+    type: reassemble_controllers/CartesianVariableImpedanceControllerPassiveDRMultidim
+    arm_id: $(arg arm_id)
+    joint_names:
+        - $(arg arm_id)_joint1
+        - $(arg arm_id)_joint2
+        - $(arg arm_id)_joint3
+        - $(arg arm_id)_joint4
+        - $(arg arm_id)_joint5
+        - $(arg arm_id)_joint6
+        - $(arg arm_id)_joint7
+    K_R_trans: 3000.0 #500.0 #700.0 #600
+    K_H_trans: 0.1 #0.1
+    K_R_rot: 10.0 #15.0 #15.0 #15.0
+    K_H_rot: 0.001 #0.01
+    nullspace_stiffness_: 0.1 #0.1
+    filter_params_: 0.005
+    max_energy_: 500.0
+    min_energy_: 10.0
+    tank_state_: 30 #10 polish #30
+    K_f_: 0.8 #0.8
+    K_I_f_ : 0.01 #0.01 #3.0
+    damping_ratio: 1.0
+
+effort_joint_trajectory_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - $(arg arm_id)_joint1
+    - $(arg arm_id)_joint2
+    - $(arg arm_id)_joint3
+    - $(arg arm_id)_joint4
+    - $(arg arm_id)_joint5
+    - $(arg arm_id)_joint6
+    - $(arg arm_id)_joint7
+  gains:
+    $(arg arm_id)_joint1: { p: 600, d: 30, i: 0 }
+    $(arg arm_id)_joint2: { p: 600, d: 30, i: 0 }
+    $(arg arm_id)_joint3: { p: 600, d: 30, i: 0 }
+    $(arg arm_id)_joint4: { p: 600, d: 30, i: 0 }
+    $(arg arm_id)_joint5: { p: 250, d: 10, i: 0 }
+    $(arg arm_id)_joint6: { p: 150, d: 10, i: 0 }
+    $(arg arm_id)_joint7: { p: 50, d: 5, i: 0 }
+  constraints:
+    goal_time: 0.5
+    $(arg arm_id)_joint1: { goal: 0.05 }
+    $(arg arm_id)_joint2: { goal: 0.05 }
+    $(arg arm_id)_joint3: { goal: 0.05 }
+    $(arg arm_id)_joint4: { goal: 0.05 }
+    $(arg arm_id)_joint5: { goal: 0.05 }
+    $(arg arm_id)_joint6: { goal: 0.05 }
+    $(arg arm_id)_joint7: { goal: 0.05 }
+
+position_joint_trajectory_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - $(arg arm_id)_joint1
+    - $(arg arm_id)_joint2
+    - $(arg arm_id)_joint3
+    - $(arg arm_id)_joint4
+    - $(arg arm_id)_joint5
+    - $(arg arm_id)_joint6
+    - $(arg arm_id)_joint7
+  constraints:
+    goal_time: 0.5
+    $(arg arm_id)_joint1: { goal: 0.05}
+    $(arg arm_id)_joint2: { goal: 0.05}
+    $(arg arm_id)_joint3: { goal: 0.05}
+    $(arg arm_id)_joint4: { goal: 0.05}
+    $(arg arm_id)_joint5: { goal: 0.05}
+    $(arg arm_id)_joint6: { goal: 0.05}
+    $(arg arm_id)_joint7: { goal: 0.05}
+
+joint_velocity_example_controller:
+    type: reassemble_controllers/JointVelocityExampleController
+    joint_names:
+        - $(arg arm_id)_joint1
+        - $(arg arm_id)_joint2
+        - $(arg arm_id)_joint3
+        - $(arg arm_id)_joint4
+        - $(arg arm_id)_joint5
+        - $(arg arm_id)_joint6
+        - $(arg arm_id)_joint7
+
+joint_position_example_controller:
+    type: reassemble_controllers/JointPositionExampleController
+    joint_names:
+        - $(arg arm_id)_joint1
+        - $(arg arm_id)_joint2
+        - $(arg arm_id)_joint3
+        - $(arg arm_id)_joint4
+        - $(arg arm_id)_joint5
+        - $(arg arm_id)_joint6
+        - $(arg arm_id)_joint7

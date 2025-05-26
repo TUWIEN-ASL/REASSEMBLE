@@ -277,6 +277,7 @@ def main():
     global use_sim
     global use_ft_sensor
     global z_rotation_quaternion
+    global controller
 
     rospy.init_node("teleop_franka")
 
@@ -291,14 +292,16 @@ def main():
     print(f"haptic_z_rotation_deg: {haptic_z_rotation_deg}")
     haptic_z_rotation_rad = np.deg2rad(haptic_z_rotation_deg)
     z_rotation_quaternion = pr.quaternion_from_euler(np.array([0, 0, haptic_z_rotation_rad]), 0, 1, 2, extrinsic=0)
+    controller = rospy.get_param('~controller', True)  # Default to False if not set
+    print(f"controller: {controller}")
 
     sos = scipy.signal.iirfilter(4, Wn=1, fs=1000, btype="low",
                              ftype="butter", output="sos")
     force_filter = LiveSosFilter(sos)
 
     # pub_pose    = rospy.Publisher('/cartesian_vic_teleop/teleop_pose', PoseStamped, queue_size=10)
-    pub_pose    = rospy.Publisher('/cartesian_impedance_controller_damping_ratio/equilibrium_pose', PoseStamped, queue_size=10)
-    
+    # pub_pose    = rospy.Publisher('/cartesian_impedance_controller_damping_ratio/equilibrium_pose', PoseStamped, queue_size=10)
+    pub_pose    = rospy.Publisher('/' + controller + '/equilibrium_pose', PoseStamped, queue_size=10)
     pub_force    = rospy.Publisher('/Master/FeedbackForce', WrenchStamped, queue_size=10)
 
     if use_ft_sensor == False:
@@ -367,6 +370,9 @@ prev_state = 0
 
 # Sim vs Real
 use_sim = False
+
+# Controller
+controller = 'cartesian_impedance_controller_damping_ratio'
 
 if __name__ == '__main__':
     try:
