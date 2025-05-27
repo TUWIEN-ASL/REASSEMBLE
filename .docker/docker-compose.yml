@@ -14,7 +14,6 @@ services:
       - ROBOT_TYPE=${ROBOT_TYPE}
       - NATNET_IP=${NATNET_IP}
       - ROBOT_SERVER_IP=${ROBOT_SERVER_IP}
-      # - GPU_IP=?
     network_mode: host
     privileged: true
     devices:

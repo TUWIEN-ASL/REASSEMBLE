@@ -1,0 +1,10 @@
+numpy==1.22.0
+openai-whisper==20240930
+opencv-python==4.10.0.84
+pip==20.0.2
+PyAudio==0.2.14
+pycryptodome==3.21.0
+pydub==0.25.1
+pytransform3d==3.14.1 
+scipy==1.10.1
+torch==2.4.1

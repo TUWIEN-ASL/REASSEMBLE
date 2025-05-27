@@ -30,9 +30,9 @@ Python 3.10+
 conda (recommended)
 ```
 
-### Installation
+### Installation for loading data
 
-Step-by-step guide on how to install the project:
+Step-by-step guide on how to install the project for utilizing the dataset.
 
 ```bash
 # Clone the repository
@@ -53,8 +53,6 @@ conda install conda-forge::ffmpeg
 pip install -e .
 ```
 
-Before building an image from the Dockerfile, the NatNet SDK must be downloaded in advance. Run ```install_sdk.sh``` in ```catkin_reas/src/natnet_ros_cpp``` to download and extract the SDK.
-
 ### Downloading dataset
 The dataset can be downloaded from the following link [google drive](https://drive.google.com/drive/u/1/folders/1HPsG63iI2tpovJoh_o2zhmyx9muNcnVx)
 
@@ -69,6 +67,87 @@ python scripts/conversions/h5_to_rlds.py --input_dir data/REASSEMBLE --output_di
 Example for running visualization:
 ```
 python scripts/visualization/vizualize_data.py  data/REASSEMBLE_corrected/2025-01-13-09-43-29.h5 --cleanup
+```
+
+### Installation for recording data with teleoperation
+
+Step-by-step guide on how to install the project for running the teleoperation script, the custom controllers or recording new data.
+
+First, some environmental variables must be set in the .docker/.env file. Avoid whitespaces between the variable name and the value.
+- ROBOT_IP refers to the robotic arm
+- ROBOT_TYPE is either fr3 or panda
+- NATNET_IP refers to the motion capture system
+- ROBOT_SERVER_IP is the main PC the recording script is running on
+
+Set up your devices (if needed) in .docker/docker-compose.yml. Then, run the following commands in a terminal:
+
+```bash
+# Download NatNet SDK (required for the motion capture system)
+sh catkin_reas/src/natnet_ros_cpp/install_sdk.sh
+
+# Enable X11 forwarding for GUIs
+xhost +local:docker
+
+# Run docker compose (default container name: reassemble)
+cd .docker
+docker compose up --build
+```
+
+Open new interactive bash terminals in the docker for running scripts. At least 3 is needed for the teleoperation.
+```bash
+docker exec -it reassemble bash
+```
+
+The docker installs all required dependencies, drivers and libraries. Note that it also replaces certain files in the workspace source direcotry, listed below
+1. ```catkin_reas/src/panda_moveit_config/config/joint_limits.yaml``` (Custom joint limits for calibration)
+2. ```asl_libs/EciLinux_amd64/inc/OsEci.h``` (some overriding methods that break the script must be commented out)
+3. ```catkin_reas/src/haptic_ros/lib/libdhd.so.3``` (haptic driver library file is copied here after installation)
+
+The workspace is built automatically in the end, followed by installing python packages required for recording new data. Building the docker image fail sometimes due to the gpg key timing out, running the script again usually fixes this error.
+
+### Setting up the teleoperation with a real robot
+1. Move the robot to starting position. Make sure that the FCI of the robot is activated.
+```bash
+roslaunch franka_example_controllers move_to_start.launch robot_ip:=$ROBOT_IP
+```
+2. Start force-torque sensor and run calibration script in separate terminals. After the calibration finishes, stop both scripts. If communication to the sensor breaks at some point, unplug it, then start again.
+```bash
+roslaunch aidin_ros FT_AIDIN.launch
+roslaunch reassemble_ft_calib franka_calib.launch robot_ip:=$ROBOT_IP
+```
+3. Start the haptic device, the controller and the calibrated force-torque sensor (in this order, using separate terminals).
+```bash
+roslaunch reassemble_haptic HapticDevice.launch force:=true centering:=false
+roslaunch reassemble_haptic TeleopFranka.launch use_sim:=false arm_id:=$ROBOT_TYPE robot_ip:=$ROBOT_IP
+roslaunch aidin_ros ft_calibrated.launch arm_id:=$ROBOT_TYPE
+```
+4. Start the motion capture system.
+```bash
+roslaunch natnet_ros_cpp natnet_ros.launch serverIP:=$NATNET_IP clientIP:=$ROBOT_SERVER_IP
+```
+5. You can begin recording the data now. The exact topics to record can be set up in the launch file below.
+```bash
+roslaunch record_teleop record.launch
+```
+
+### Setting up the teleoperation in Gazebo simulation
+Since no calibration is needed in the simulation, the teleoperation can be started immeditely.
+```bash
+roslaunch reassemble_haptic TeleopFranka.launch use_sim:=true arm_id:=$ROBOT_TYPE robot_ip:=$ROBOT_IP controller:=cartesian_impedance_example_controller
+```
+
+### Additional launch files for testing and debugging
+You can test the microphones and cameras using the launch files below.
+```bash
+roslaunch record_teleop test_mic.launch
+roslaunch record_teleop test_cam.launch
+roslaunch realsense2_camera rs_camera.launch
+```
+
+It is also possible to launch controllers without teleoperation. First one is a simple cartesian impedance controler, second one is enhanced with zero-space damping to improve stability near singularities. Default Franka controllers are also available if needed. Fine-tuning our controllers is possible via dynamic reconfigure: Run ```rqt``` and select Plugins/Configuration/Dynamic Reconfigure. The joint limits for calibration can be modified in ```asl_libs/joint_limits.yaml``` before building the docker image and in ```catkin_reas/src/panda_moveit_config/config/joint_limits.yaml``` in the docker container.
+```bash
+roslaunch reassemble_controllers cartesian_impedance_example_controller.launch robot_ip:=$ROBOT_IP robot:=$ROBOT_TYPE
+roslaunch reassemble_controllers cartesian_impedance_controller_damping_ratio.launch robot_ip:=$ROBOT_IP robot:=$ROBOT_TYPE
 ```
 
 ## 📑 Dataset Structure
