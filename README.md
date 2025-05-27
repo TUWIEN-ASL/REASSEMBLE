@@ -144,7 +144,7 @@ roslaunch record_teleop test_cam.launch
 roslaunch realsense2_camera rs_camera.launch
 ```
 
-It is also possible to launch controllers without teleoperation. First one is a simple cartesian impedance controler, second one is enhanced with zero-space damping to improve stability near singularities. Default Franka controllers are also available if needed. Fine-tuning our controllers is possible via dynamic reconfigure: Run ```rqt``` and select Plugins/Configuration/Dynamic Reconfigure. The joint limits for calibration can be modified in ```asl_libs/joint_limits.yaml``` before building the docker image and in ```catkin_reas/src/panda_moveit_config/config/joint_limits.yaml``` in the docker container.
+It is also possible to launch one of the controllers below without teleoperation. The first controller is a cartesian impedance controler, the second one is a cartesian impedance controller enhanced with zero-space damping to improve stability near singularities. Default Franka controllers are also available in the ```franka_example_controllers``` package. Fine-tuning our controllers is possible via dynamic reconfigure: Run ```rqt``` and select Plugins/Configuration/Dynamic Reconfigure. The joint limits for calibration can be modified in ```asl_libs/joint_limits.yaml``` before building the docker image and in ```catkin_reas/src/panda_moveit_config/config/joint_limits.yaml``` in the docker container.
 ```bash
 roslaunch reassemble_controllers cartesian_impedance_example_controller.launch robot_ip:=$ROBOT_IP robot:=$ROBOT_TYPE
 roslaunch reassemble_controllers cartesian_impedance_controller_damping_ratio.launch robot_ip:=$ROBOT_IP robot:=$ROBOT_TYPE

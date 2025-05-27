@@ -12,7 +12,7 @@ tmp
 catkin_reas/src/natnet_ros_cpp/deps/NatNetSDK/
 
 # Environmental variables configuration for IPs
-.docker/.env
+# .docker/.env
 
 # Calibration file
 asl_libs/franka_ft_calib_data.yaml
