@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<launch>
+    <arg name="topics" default="/hama1/audio 
+                                /hama2/audio 
+                                /hand/audio
+                                /hama1/image_raw/compressed 
+                                /hama2/image_raw/compressed
+                                /camera/color/image_raw/compressed 
+                                /capture_node/camera/image 
+                                /capture_node/events
+                                /record_manager/record_flag 
+                                /record_manager/segment_num" />
+
+    <node pkg="record_teleop" type="topic_monitor.py" name="topic_monitor" output="screen">
+        <param name="topics" value="$(arg topics)" />
+    </node>
+</launch>
+
+
+

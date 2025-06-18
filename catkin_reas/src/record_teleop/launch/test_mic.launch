@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<launch>
+    
+	<include file="$(find audio_capture)/launch/capture.launch">
+		<arg name="device" value="$(env HAMA1_MIC)"/>
+		<arg name="channels" value="2" />
+		<arg name="ns" value="hama1" />
+	</include>
+
+	<include file="$(find audio_capture)/launch/capture.launch">
+		<arg name="device" value="$(env HAMA2_MIC)"/>
+		<arg name="channels" value="2" />
+		<arg name="ns" value="hama2" />
+	</include>
+
+	<include file="$(find audio_capture)/launch/capture.launch">
+		<arg name="device" value="$(env ENV_MIC)"/>
+		<arg name="channels" value="2" />
+	</include>
+
+	<include file="$(find audio_capture)/launch/capture.launch">
+		<arg name="device" value="$(env HAND_MIC)"/>
+		<arg name="channels" value="1" />
+		<arg name="sample_rate" value="48000" />
+		<arg name="ns" value="hand" />
+	</include>
+
+</launch>

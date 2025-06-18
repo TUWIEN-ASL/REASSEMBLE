@@ -1,0 +1,108 @@
+<?xml version="1.0" ?>
+<launch>
+	<!-- Args -->
+	<arg name="topic"		default="/record_manager/record_flag 
+								/record_manager/segment_num
+								/joint_states
+								/reassemble_state_controller/franka_states 
+								/reassemble_state_controller/F_ext_base 
+								/reassemble_state_controller/F_ext 
+								/ft_sensor/ft_raw 
+								/ft_sensor/ft_compensated_base
+								/hama1/image_raw/compressed
+								/hama1/audio_info
+								/hama1/audio
+								/hama1/audio_stamped
+								/hama2/image_raw/compressed
+								/hama2/audio_info
+								/hama2/audio
+								/hama2/audio_stamped
+								/camera/color/image_raw/compressed
+								/capture_node/camera/image
+								/capture_node/events
+								/hand/audio_info
+								/hand/audio
+								/hand/audio_stamped
+								/franka_state_controller/O_T_EE
+								/franka_state_controller/O_T_EE_vel" />
+	<arg name="base_path"	default="/root/data" />	
+
+
+	<!-- Recording manager -->
+	<node pkg="record_teleop" type="record_manager.py" name="record_manager" output="screen">
+		<!-- Pass arguments as parameters to the node -->
+		<param name="topic" value="$(arg topic)"/>
+		<param name="base_path" value="$(arg base_path)"/>
+	</node>
+
+	<!-- Cameras -->
+	<node name="hama1" pkg="usb_cam" type="usb_cam_node" output="screen" >
+		<param name="video_device" value="$(env HAMA1_CAM)" />
+		<param name="image_width" value="640" />
+		<param name="image_height" value="480" />
+		<param name="pixel_format" value="yuyv" />
+		<param name="camera_frame_id" value="cam1" />
+		<param name="io_method" value="mmap"/>
+  	</node>
+
+	<node name="hama2" pkg="usb_cam" type="usb_cam_node" output="screen" >
+		<param name="video_device" value="$(env HAMA2_CAM)" />
+		<param name="image_width" value="640" />
+		<param name="image_height" value="480" />
+		<param name="pixel_format" value="yuyv" />
+		<param name="camera_frame_id" value="cam2" />
+		<param name="io_method" value="mmap"/>
+  	</node>
+
+	<include file="$(find realsense2_camera)/launch/rs_camera.launch">
+		<arg name="color_width" value="640" />
+		<arg name="color_height" value="480" />
+		<arg name="color_fps" value="30" />
+		<arg name="enable_depth" value="false" />
+	</include>
+
+	<node pkg="dv_ros_capture" type="capture_node" name="capture_node" clear_params="true" output="screen" required="true"/>
+
+	<!-- Audio recording and processing -->
+	<include file="$(find asr_ros)/launch/audio_record.launch">
+		<arg name="base_path" value="$(arg base_path)"/>
+		<arg name="audio_device" value="$(env ENV_MIC)"/>
+	</include>
+
+	<include file="$(find asr_ros)/launch/audio_process.launch">
+		<arg name="base_path" value="$(arg base_path)"/>
+	</include>
+
+	<include file="$(find audio_capture)/launch/capture.launch">
+		<arg name="device" value="$(env HAMA1_MIC)"/>
+		<arg name="channels" value="2" />
+		<arg name="ns" value="hama1" />
+	</include>
+
+	<include file="$(find audio_capture)/launch/capture.launch">
+		<arg name="device" value="$(env HAMA2_MIC)"/>
+		<arg name="channels" value="2" />
+		<arg name="ns" value="hama2" />
+	</include>
+
+	<include file="$(find audio_capture)/launch/capture.launch">
+		<arg name="device" value="$(env HAND_MIC)"/>
+		<arg name="channels" value="1" />
+		<arg name="sample_rate" value="48000" />
+		<arg name="ns" value="hand" />
+	</include>
+
+
+	<!-- End effector messages -->
+	<node pkg="record_teleop" type="get_ee_pose_vel.py" name="ee_vel_publisher" output="screen" />
+	<node pkg="record_teleop" type="franka_to_geometry_messages.py" name="ee_pos_publisher" output="screen" />
+
+	<!-- F/T readings -->
+	<include file="$(find aidin_ros)/launch/ft_calibrated.launch">
+		<arg name="arm_id" value="$(env ROBOT_TYPE)"/>
+		<arg name="comm_type" value="can"/>
+	</include>
+
+	<!-- mocap camera pose -->
+	<!-- <include file="$(find natnet_ros_cpp)/launch/natnet_ros.launch" /> -->
+</launch>

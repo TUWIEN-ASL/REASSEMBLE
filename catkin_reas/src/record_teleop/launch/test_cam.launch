@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<launch>
+    
+	<node name="hama1" pkg="usb_cam" type="usb_cam_node" output="screen" >
+		<param name="video_device" value="$(env HAMA1_CAM)" />		
+		<param name="image_width" value="640" />
+		<param name="image_height" value="480" />
+		<param name="pixel_format" value="yuyv" />
+		<param name="camera_frame_id" value="cam1" />
+		<param name="io_method" value="mmap"/>
+  	</node>
+
+	<node name="hama2" pkg="usb_cam" type="usb_cam_node" output="screen" >
+		<param name="video_device" value="$(env HAMA2_CAM)" />
+		<param name="image_width" value="640" />
+		<param name="image_height" value="480" />
+		<param name="pixel_format" value="yuyv" />
+		<param name="camera_frame_id" value="cam2" />
+		<param name="io_method" value="mmap"/>
+  	</node>
+
+	<include file="$(find realsense2_camera)/launch/rs_camera.launch">
+		<arg name="color_width" value="640" />
+		<arg name="color_height" value="480" />
+		<arg name="color_fps" value="30" />
+		<arg name="enable_depth" value="false" />
+	</include>
+
+	<node pkg="dv_ros_capture" type="capture_node" name="capture_node" clear_params="true" output="screen" required="true"/>
+
+</launch>

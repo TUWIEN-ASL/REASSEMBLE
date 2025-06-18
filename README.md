@@ -127,7 +127,7 @@ roslaunch natnet_ros_cpp natnet_ros.launch serverIP:=$NATNET_IP clientIP:=$ROBOT
 ```
 5. You can begin recording the data now. The exact topics to record can be set up in the launch file below.
 ```bash
-roslaunch record_teleop record.launch
+roslaunch record_teleop record.launch base_path:=/root/data
 ```
 
 ### Setting up the teleoperation in Gazebo simulation
