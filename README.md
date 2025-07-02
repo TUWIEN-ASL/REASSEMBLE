@@ -54,7 +54,7 @@ pip install -e .
 ```
 
 ### Downloading dataset
-The dataset can be downloaded from the following link [google drive](https://drive.google.com/drive/u/1/folders/1HPsG63iI2tpovJoh_o2zhmyx9muNcnVx)
+The dataset can be downloaded from the following link [TUData](https://researchdata.tuwien.ac.at/records/0ewrv-8cb44)
 
 ### Usage
 Scripts are parametrized with argparse, so in doubt you and always add the ```-h``` flag to get a description of the parameters.
